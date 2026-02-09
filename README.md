@@ -1,0 +1,211 @@
+# Gaga Finance - Modular NFT Marketplace
+
+A production-grade **Modular NFT Marketplace with Composable Architecture** on Stacks (Bitcoin L2) MAINNET.
+
+Built with Clarity smart contracts and TypeScript interaction scripts.
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│                        MARKETPLACE CORE                             │
+│  • Listings orchestration   • Protocol fee routing                  │
+│  • Fixed-price purchases    • Event emission                        │
+└───────────┬──────────────────────┬──────────────────────┬───────────┘
+            │                      │                      │
+    ┌───────▼───────┐      ┌───────▼───────┐      ┌───────▼───────┐
+    │    ESCROW     │      │ ROYALTY ENGINE│      │    AUCTION    │
+    │ • STX custody │      │ • Per-collection│     │ • Timed bids  │
+    │ • NFT custody │      │   royalties   │      │ • Anti-snipe  │
+    │ • Settlement  │      │ • Payout calc │      │ • Settlement  │
+    └───────────────┘      └───────────────┘      └───────────────┘
+                                   │
+                           ┌───────▼───────┐
+                           │  SIP-009 NFT  │
+                           │ • Minting     │
+                           │ • Transfers   │
+                           │ • Approvals   │
+                           └───────────────┘
+```
+
+## 📦 Contract Responsibilities
+
+| Contract | Purpose |
+|----------|---------|
+| **marketplace-core** | Central orchestration for fixed-price listings, purchases, protocol fee collection |
+| **escrow** | Secure custody of STX and NFTs during trades, emergency recovery |
+| **royalty-engine** | Per-collection royalty configuration and payout calculations |
+| **auction** | Timed auctions with bid tracking, anti-sniping extension |
+| **nft** | Production SIP-009 NFT with minting, approvals, pausability |
+
+## 💰 Fee Model
+
+| Fee Type | Recipient | Calculation |
+|----------|-----------|-------------|
+| **Protocol Fee** | Deployer Wallet | `(price × 250) / 10000` = 2.5% |
+| **Royalty** | Creator | `(price × royaltyBps) / 10000` (max 25%) |
+| **Seller** | Seller | `price - protocolFee - royalty` |
+
+**Example:** 1 STX sale with 5% royalty:
+- Protocol Fee: 0.025 STX
+- Creator Royalty: 0.05 STX  
+- Seller Receives: 0.925 STX
+
+## 🚀 Mainnet Deployment
+
+### Prerequisites
+- Clarinet 3.11.0+ installed
+- Node.js 18+ installed
+- Funded deployer wallet with STX
+
+### Deployment Order
+
+```bash
+# 1. Deploy contracts in order
+clarinet deployments apply -p deployments/default.mainnet-plan.yaml
+
+# Deployment sequence:
+# 1. sip-009-trait
+# 2. marketplace-trait
+# 3. nft
+# 4. escrow
+# 5. royalty-engine
+# 6. auction
+# 7. marketplace-core
+```
+
+### Post-Deployment Configuration
+
+```clarity
+;; 1. Configure escrow with marketplace address
+(contract-call? .escrow set-marketplace-contract .marketplace-core)
+(contract-call? .escrow set-auction-contract .auction)
+
+;; 2. Register NFT collection for royalties
+(contract-call? .royalty-engine register-collection .nft 'SP_CREATOR_ADDRESS u500)
+
+;; 3. Verify fee recipient
+(contract-call? .marketplace-core get-fee-recipient)
+```
+
+## 🔧 Scripts Usage
+
+### Setup
+```bash
+cd scripts
+npm install
+```
+
+### 1. Generate Wallets
+```bash
+npm run generate-wallets -- --wallets=10
+```
+⚠️ **MAINNET WARNING**: Store private keys securely!
+
+### 2. Mint NFTs
+```bash
+npm run mint -- --count=2
+```
+
+### 3. Create Listings
+```bash
+npm run list -- --count=1 --start-token=1
+```
+
+### 4. Buy NFTs
+```bash
+npm run buy
+```
+
+### 5. Run Auctions
+```bash
+npm run auction -- --mode=full
+npm run auction -- --mode=bid --auction-id=1
+npm run auction -- --mode=settle --auction-id=1
+```
+
+### 6. Full Simulation
+```bash
+npm run simulate -- --wallets=25 --mints=2
+
+# Dry run (no transactions)
+npm run simulate -- --wallets=10 --dry-run
+```
+
+## 🧪 Testing
+
+```bash
+# Run all tests
+clarinet test
+
+# Run specific test file
+clarinet test tests/marketplace-core.test.ts
+
+# Check contract syntax
+clarinet check
+```
+
+## 📁 Project Structure
+
+```
+Gagafinance/
+├── contracts/
+│   ├── traits/
+│   │   ├── sip-009-trait.clar
+│   │   └── marketplace-trait.clar
+│   ├── nft.clar
+│   ├── escrow.clar
+│   ├── royalty-engine.clar
+│   ├── auction.clar
+│   └── marketplace-core.clar
+├── scripts/
+│   ├── package.json
+│   ├── config.ts
+│   ├── wallet-generator.ts
+│   ├── mint.ts
+│   ├── listing.ts
+│   ├── buying.ts
+│   ├── auction.ts
+│   └── simulate.ts
+├── tests/
+│   ├── nft.test.ts
+│   ├── marketplace-core.test.ts
+│   ├── auction.test.ts
+│   ├── royalty-engine.test.ts
+│   └── escrow.test.ts
+├── Clarinet.toml
+└── README.md
+```
+
+## 🔒 Security Considerations
+
+| Feature | Implementation |
+|---------|----------------|
+| **Caller Validation** | All external calls explicitly validated |
+| **Pausability** | Owner can pause all contracts for emergencies |
+| **Royalty Caps** | Maximum 25% royalty to prevent abuse |
+| **Emergency Recovery** | Owner-only recovery hooks in escrow |
+| **Safe Withdrawals** | Protected withdrawal patterns |
+| **Error Codes** | All errors documented for debugging |
+
+### Error Code Reference
+
+| Contract | Code Range | Example |
+|----------|------------|---------|
+| NFT | 100-110 | `ERR-NOT-TOKEN-OWNER (105)` |
+| Escrow | 200-209 | `ERR-INSUFFICIENT-BALANCE (201)` |
+| Royalty | 300-306 | `ERR-ROYALTY-TOO-HIGH (306)` |
+| Auction | 400-414 | `ERR-BID-TOO-LOW (406)` |
+| Marketplace | 500-511 | `ERR-CANNOT-BUY-OWN (508)` |
+
+## 🎯 Design Decisions
+
+1. **Modular Architecture**: Each contract has a single responsibility, enabling independent upgrades
+2. **Trait-based Interop**: SIP-009 compliance ensures compatibility with other Stacks NFT tooling
+3. **Conservative Fees**: Default 2.5% protocol fee balances revenue with user adoption
+4. **Anti-sniping**: Auctions extend by 1 hour if bid placed in final hour
+5. **Block-based Timing**: Uses block-height for auction timing (reliable, deterministic)
+
+## 📄 License
+
+MIT

@@ -1,0 +1,40 @@
+[project]
+name = "Gagafinance"
+description = "Gaga Finance - Modular NFT Marketplace with Composable Architecture on Stacks Mainnet"
+authors = []
+telemetry = false
+cache_dir = "./.cache"
+
+# Traits
+[contracts.sip-009-trait]
+path = "contracts/traits/sip-009-trait.clar"
+epoch = "3.0"
+
+[contracts.marketplace-trait]
+path = "contracts/traits/marketplace-trait.clar"
+epoch = "3.0"
+
+# Core Contracts
+[contracts.nft]
+path = "contracts/nft.clar"
+epoch = "3.0"
+
+[contracts.escrow]
+path = "contracts/escrow.clar"
+epoch = "3.0"
+
+[contracts.royalty-engine]
+path = "contracts/royalty-engine.clar"
+epoch = "3.0"
+
+[contracts.auction]
+path = "contracts/auction.clar"
+epoch = "3.0"
+
+[contracts.marketplace-core]
+path = "contracts/marketplace-core.clar"
+epoch = "3.0"
+
+[repl.analysis]
+passes = ["check_checker"]
+check_checker = { trusted_sender = false, trusted_caller = false, callee_filter = false }

@@ -1,0 +1,63 @@
+# Clarinet settings
+**/settings/Mainnet.toml
+**/settings/Testnet.toml
+.cache/**
+history.txt
+
+# Dependencies
+node_modules/
+package-lock.json
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage
+*.info
+costs-reports.json
+
+# ==========================================
+# SENSITIVE FILES - NEVER COMMIT
+# ==========================================
+
+# Environment files
+.env
+.env.*
+.env.local
+.env.production
+
+# Wallet and key files
+wallets.json
+**/wallets.json
+*.key
+*.pem
+*.secret
+private-key*
+secret-key*
+*mnemonic*
+
+# Script output with potential sensitive data
+interaction-results.json
+simulation-metrics.json
+
+# ==========================================
+# IDE and OS Files
+# ==========================================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Build outputs
+dist/
+build/
+*.js.map
+
+# Temporary files
+*.tmp
+*.temp
