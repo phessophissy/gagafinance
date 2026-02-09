@@ -22,6 +22,9 @@ costs-reports.json
 # SENSITIVE FILES - NEVER COMMIT
 # ==========================================
 
+# Scripts folder - contains wallet mnemonics and private keys
+scripts/
+
 # Environment files
 .env
 .env.*
