@@ -2,7 +2,66 @@
 
 A production-grade **Modular NFT Marketplace with Composable Architecture** on Stacks (Bitcoin L2) MAINNET.
 
-Built with Clarity smart contracts and TypeScript interaction scripts.
+Built with Clarity smart contracts, TypeScript interaction scripts, and **`@stacks/connect`** for wallet integration.
+
+## 🔌 Wallet Integration with `@stacks/connect`
+
+This project uses the official **[@stacks/connect](https://github.com/hirosystems/connect)** library for seamless wallet integration with **Hiro Wallet** and **Leather Wallet**.
+
+### Installation
+
+```bash
+cd scripts
+npm install @stacks/connect
+```
+
+### Quick Start
+
+```typescript
+import { 
+    connectWallet, 
+    mintNFT, 
+    createListing, 
+    buyListing,
+    getUserAddress 
+} from './wallet-connect';
+
+// Connect to Hiro/Leather Wallet
+connectWallet(() => {
+    console.log('Connected:', getUserAddress());
+});
+
+// Mint an NFT (opens wallet for signing)
+mintNFT(userAddress, (txId) => {
+    console.log('Minted! TX:', txId);
+});
+
+// Create a listing (0.5 STX)
+createListing(tokenId, 500000, (txId) => {
+    console.log('Listed! TX:', txId);
+});
+
+// Buy a listing
+buyListing(listingId, (txId) => {
+    console.log('Purchased! TX:', txId);
+});
+```
+
+### Available Functions
+
+| Function | Description |
+|----------|-------------|
+| `connectWallet()` | Opens Hiro/Leather wallet popup for authentication |
+| `disconnectWallet()` | Signs out the current user |
+| `getUserAddress()` | Returns the connected wallet's Stacks address |
+| `isUserSignedIn()` | Checks if a wallet is connected |
+| `mintNFT()` | Mints an NFT to a recipient |
+| `createListing()` | Creates a fixed-price marketplace listing |
+| `buyListing()` | Purchases an existing listing |
+| `createAuction()` | Creates a timed auction |
+| `placeBid()` | Places a bid on an active auction |
+
+See [`scripts/wallet-connect.ts`](scripts/wallet-connect.ts) for the full implementation.
 
 ## 🏗️ Architecture
 
