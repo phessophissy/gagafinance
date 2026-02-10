@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useGagaContracts } from '../hooks/useGagaContracts';
 import { ShoppingBag } from 'lucide-react';
 import { ListingItem } from './ListingItem';
+import { FadeIn } from './ui/FadeIn';
 
 // Mock data for now, since reading from contract requires read-only calls implementation
 const MOCK_LISTINGS = [
@@ -45,16 +46,17 @@ export const MarketplaceFeed: React.FC = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {MOCK_LISTINGS.map((listing) => (
-                    <ListingItem
-                        key={listing.id}
-                        id={listing.id}
-                        tokenId={listing.tokenId}
-                        price={listing.price}
-                        seller={listing.seller}
-                        isBuying={buyingId === listing.id}
-                        onBuy={handleBuy}
-                    />
+                {MOCK_LISTINGS.map((listing, index) => (
+                    <FadeIn key={listing.id} delay={index * 0.1}>
+                        <ListingItem
+                            id={listing.id}
+                            tokenId={listing.tokenId}
+                            price={listing.price}
+                            seller={listing.seller}
+                            isBuying={buyingId === listing.id}
+                            onBuy={handleBuy}
+                        />
+                    </FadeIn>
                 ))}
             </div>
         </div>

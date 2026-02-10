@@ -1,5 +1,5 @@
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Layout } from './components/Layout';
 import { MintNFT } from './components/MintNFT';
 import { MarketplaceFeed } from './components/MarketplaceFeed';
