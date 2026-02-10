@@ -7,11 +7,6 @@ import {
     principalCV,
     contractPrincipalCV,
     PostConditionMode,
-    FungibleConditionCode,
-    makeStandardSTXPostCondition,
-    NonFungibleConditionCode,
-    createAssetInfo,
-    makeStandardNonFungiblePostCondition,
 } from '@stacks/transactions';
 import { openContractCall } from '@stacks/connect';
 
@@ -41,13 +36,8 @@ export const useGagaContracts = () => {
         const address = userSession.loadUserData().profile.stxAddress.testnet;
 
         // Post-condition: User transfers NFT to contract
-        const assetInfo = createAssetInfo(CONTRACTS.NFT.address, CONTRACTS.NFT.name, 'gaga-nft'); // Check asset name in contract
-        const pc = makeStandardNonFungiblePostCondition(
-            address,
-            NonFungibleConditionCode.Sends,
-            assetInfo,
-            uintCV(tokenId)
-        );
+        // const assetInfo = createAssetInfo(CONTRACTS.NFT.address, CONTRACTS.NFT.name, 'gaga-nft'); 
+        // const pc = makeStandardNonFungiblePostCondition(...);
 
         // Note: create-listing takes trait, token-id, price
         // Trait needs to be passed as contract reference usually, or just address.name
