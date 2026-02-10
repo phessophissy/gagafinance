@@ -6,12 +6,12 @@ import { ListingModal } from './components/ListingModal';
 
 function App() {
   const [isListingModalOpen, setIsListingModalOpen] = useState(false);
-  const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
+  // const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
 
-  const handleListClick = (tokenId: number) => {
-    setSelectedTokenId(tokenId);
-    setIsListingModalOpen(true);
-  };
+  // const handleListClick = (tokenId: number) => {
+  //   setSelectedTokenId(tokenId);
+  //   setIsListingModalOpen(true);
+  // };
 
   return (
     <Layout>
