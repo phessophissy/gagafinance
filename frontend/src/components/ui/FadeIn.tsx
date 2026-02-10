@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 
 interface FadeInProps {
-    children: React.ReactNode;
+    children?: React.ReactNode;
     delay?: number;
     duration?: number;
     className?: string;
