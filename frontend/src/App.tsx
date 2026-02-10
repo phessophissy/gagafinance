@@ -3,14 +3,15 @@ import { useState, useEffect } from 'react';
 import { Layout } from './components/Layout';
 import { MintNFT } from './components/MintNFT';
 import { MarketplaceFeed } from './components/MarketplaceFeed';
-// import { ListingModal } from './components/ListingModal';
+import { MyNFTs } from './components/MyNFTs';
+import { ListingModal } from './components/ListingModal';
 import { PageLoader } from './components/ui/PageLoader';
 import { FadeIn } from './components/ui/FadeIn';
 
 function App() {
   const [isLoading, setIsLoading] = useState(true);
-  // const [isListingModalOpen, setIsListingModalOpen] = useState(false);
-  // const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
+  const [isListingModalOpen, setIsListingModalOpen] = useState(false);
+  const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
 
   useEffect(() => {
     // Simulate initial data loading
@@ -19,6 +20,11 @@ function App() {
     }, 2000);
     return () => clearTimeout(timer);
   }, []);
+
+  const handleListClick = (tokenId: number) => {
+    setSelectedTokenId(tokenId);
+    setIsListingModalOpen(true);
+  };
 
   if (isLoading) {
     return <PageLoader />;
@@ -44,13 +50,17 @@ function App() {
         </FadeIn>
       </div>
 
-      {/* {selectedTokenId && (
-        <ListingModal 
-          isOpen={isListingModalOpen} 
-          onClose={() => setIsListingModalOpen(false)} 
-          tokenId={selectedTokenId} 
+      <FadeIn delay={0.7}>
+        <MyNFTs onList={handleListClick} />
+      </FadeIn>
+
+      {selectedTokenId && (
+        <ListingModal
+          isOpen={isListingModalOpen}
+          onClose={() => setIsListingModalOpen(false)}
+          tokenId={selectedTokenId}
         />
-      )} */}
+      )}
 
       <FadeIn delay={0.8}>
         <MarketplaceFeed />

@@ -1,4 +1,4 @@
-```typescript
+
 import { motion } from 'framer-motion';
 import React from 'react';
 
@@ -58,4 +58,4 @@ export const FadeIn: React.FC<FadeInProps> = ({
     );
 };
 
-```
+
