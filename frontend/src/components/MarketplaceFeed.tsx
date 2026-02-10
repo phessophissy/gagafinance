@@ -6,12 +6,12 @@ import { FadeIn } from './ui/FadeIn';
 
 // Mock data for now, since reading from contract requires read-only calls implementation
 const MOCK_LISTINGS = [
-    { id: 1, tokenId: 101, price: 50, seller: 'ST1...ABC' },
-    { id: 2, tokenId: 102, price: 120, seller: 'ST2...XYZ' },
-    { id: 3, tokenId: 103, price: 75, seller: 'ST3...DEF' },
-    { id: 4, tokenId: 104, price: 200, seller: 'ST4...GHI' },
-    { id: 5, tokenId: 105, price: 15, seller: 'ST5...JKL' },
-    { id: 6, tokenId: 106, price: 300, seller: 'ST6...MNO' },
+    { id: 1, tokenId: 101, price: 50000000, seller: 'ST1...ABC' },
+    { id: 2, tokenId: 102, price: 120000000, seller: 'ST2...XYZ' },
+    { id: 3, tokenId: 103, price: 75000000, seller: 'ST3...DEF' },
+    { id: 4, tokenId: 104, price: 200000000, seller: 'ST4...GHI' },
+    { id: 5, tokenId: 105, price: 15000000, seller: 'ST5...JKL' },
+    { id: 6, tokenId: 106, price: 300000000, seller: 'ST6...MNO' },
 ];
 
 export const MarketplaceFeed: React.FC = () => {
