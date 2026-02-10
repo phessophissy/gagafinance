@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useGagaContracts } from '../hooks/useGagaContracts';
 import { ShoppingBag } from 'lucide-react';
 import { ListingItem } from './ListingItem';
