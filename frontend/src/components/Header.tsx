@@ -1,6 +1,7 @@
 import React from 'react';
 import { Wallet, LogOut } from 'lucide-react';
 import { useWallet } from './WalletProvider';
+import { Button } from './ui/Button';
 
 export const Header: React.FC = () => {
     const { connectWallet, disconnectWallet, isConnected, userData } = useWallet();
@@ -30,22 +31,24 @@ export const Header: React.FC = () => {
                                 {userData?.profile?.stxAddress?.testnet ? truncateAddress(userData.profile.stxAddress.testnet) : 'Connected'}
                             </span>
                         </div>
-                        <button
+                        <Button
                             onClick={disconnectWallet}
-                            className="p-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-colors"
+                            variant="ghost"
+                            size="sm"
                             title="Disconnect"
                         >
                             <LogOut size={20} />
-                        </button>
+                        </Button>
                     </div>
                 ) : (
-                    <button
+                    <Button
                         onClick={connectWallet}
-                        className="flex items-center gap-2 bg-neutral-800 hover:bg-neutral-700 border border-neutral-700 px-4 py-2 rounded-lg transition-all duration-200"
+                        variant="secondary"
+                        className="flex items-center gap-2"
                     >
                         <Wallet size={18} className="text-purple-400" />
                         <span className="font-medium">Connect Wallet</span>
-                    </button>
+                    </Button>
                 )}
             </div>
         </header>
