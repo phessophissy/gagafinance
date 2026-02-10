@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useGagaContracts } from '../hooks/useGagaContracts';
-import { ShoppingBag, Tag } from 'lucide-react';
+import { ShoppingBag } from 'lucide-react';
+import { ListingItem } from './ListingItem';
 
 // Mock data for now, since reading from contract requires read-only calls implementation
 const MOCK_LISTINGS = [
@@ -45,45 +46,15 @@ export const MarketplaceFeed: React.FC = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {MOCK_LISTINGS.map((listing) => (
-                    <div key={listing.id} className="bg-neutral-800/50 border border-neutral-700 rounded-xl overflow-hidden hover:border-pink-500/50 transition-all group">
-                        <div className="aspect-square bg-neutral-800 flex items-center justify-center relative overflow-hidden">
-                            <img
-                                src={`https://api.dicebear.com/7.x/shapes/svg?seed=${listing.tokenId}`}
-                                alt={`NFT #${listing.tokenId}`}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                            />
-                            <div className="absolute top-3 right-3 bg-black/60 backdrop-blur px-2 py-1 rounded text-xs font-mono">
-                                #{listing.tokenId}
-                            </div>
-                        </div>
-
-                        <div className="p-4">
-                            <div className="flex justify-between items-start mb-4">
-                                <div>
-                                    <h3 className="font-bold text-lg">Gaga #{listing.tokenId}</h3>
-                                    <p className="text-xs text-neutral-400">Seller: {listing.seller}</p>
-                                </div>
-                                <div className="text-right">
-                                    <div className="text-lg font-bold text-pink-400">{listing.price} STX</div>
-                                </div>
-                            </div>
-
-                            <button
-                                onClick={() => handleBuy(listing.id, listing.price)}
-                                disabled={buyingId === listing.id}
-                                className="w-full py-2 bg-neutral-700 hover:bg-pink-600 rounded-lg font-medium transition-colors flex items-center justify-center gap-2"
-                            >
-                                {buyingId === listing.id ? (
-                                    'Processing...'
-                                ) : (
-                                    <>
-                                        <Tag size={16} />
-                                        Buy Now
-                                    </>
-                                )}
-                            </button>
-                        </div>
-                    </div>
+                    <ListingItem
+                        key={listing.id}
+                        id={listing.id}
+                        tokenId={listing.tokenId}
+                        price={listing.price}
+                        seller={listing.seller}
+                        isBuying={buyingId === listing.id}
+                        onBuy={handleBuy}
+                    />
                 ))}
             </div>
         </div>
