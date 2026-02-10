@@ -26,13 +26,13 @@ function App() {
         <MintNFT />
       </div>
 
-      {selectedTokenId && (
+      {/* {selectedTokenId && (
         <ListingModal
           isOpen={isListingModalOpen}
           onClose={() => setIsListingModalOpen(false)}
           tokenId={selectedTokenId}
         />
-      )}
+      )} */}
 
       <MarketplaceFeed />
     </Layout>
