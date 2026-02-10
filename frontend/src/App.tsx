@@ -1,17 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Layout } from './components/Layout';
 import { MintNFT } from './components/MintNFT';
 import { MarketplaceFeed } from './components/MarketplaceFeed';
 // import { ListingModal } from './components/ListingModal';
+import { PageLoader } from './components/ui/PageLoader';
 
 function App() {
+  const [isLoading, setIsLoading] = useState(true);
   // const [isListingModalOpen, setIsListingModalOpen] = useState(false);
   // const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
 
-  // const handleListClick = (tokenId: number) => {
-  //   setSelectedTokenId(tokenId);
-  //   setIsListingModalOpen(true);
-  // };
+  useEffect(() => {
+    // Simulate initial data loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <PageLoader />;
+  }
 
   return (
     <Layout>
