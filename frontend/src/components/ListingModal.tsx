@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { X } from 'lucide-react';
 import { useGagaContracts } from '../hooks/useGagaContracts';
+import { Button } from './ui/Button';
+import { FadeIn } from './ui/FadeIn';
 
 interface ListingModalProps {
     isOpen: boolean;
@@ -31,43 +33,56 @@ export const ListingModal: React.FC<ListingModalProps> = ({ isOpen, onClose, tok
     };
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm">
-            <div className="bg-neutral-900 border border-neutral-700 rounded-xl w-full max-w-md p-6 relative">
-                <button
-                    onClick={onClose}
-                    className="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors"
-                >
-                    <X size={24} />
-                </button>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+            <FadeIn duration={0.2} className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
-                <h2 className="text-2xl font-bold mb-6">List NFT #{tokenId}</h2>
-
-                <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-                    <div>
-                        <label className="block text-sm font-medium text-neutral-400 mb-1">
-                            Price (STX)
-                        </label>
-                        <input
-                            type="number"
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                            placeholder="0.00"
-                            step="0.1"
-                            min="0"
-                            className="w-full bg-neutral-800 border border-neutral-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-purple-500 transition-colors"
-                            required
-                        />
-                    </div>
-
+            <FadeIn direction="up" duration={0.3} className="relative z-10 w-full max-w-md">
+                <div className="bg-neutral-900 border border-neutral-700 rounded-xl p-6 relative shadow-2xl shadow-purple-500/10">
                     <button
-                        type="submit"
-                        disabled={isSubmitting}
-                        className="w-full py-3 bg-gradient-to-r from-purple-600 to-pink-600 rounded-lg font-bold text-lg hover:opacity-90 transition-opacity disabled:opacity-50"
+                        onClick={onClose}
+                        className="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors"
                     >
-                        {isSubmitting ? 'Confirming...' : 'List for Sale'}
+                        <X size={24} />
                     </button>
-                </form>
-            </div>
+
+                    <h2 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+                        List NFT #{tokenId}
+                    </h2>
+
+                    <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+                        <div>
+                            <label className="block text-sm font-medium text-neutral-400 mb-2">
+                                Price (STX)
+                            </label>
+                            <div className="relative">
+                                <input
+                                    type="number"
+                                    value={price}
+                                    onChange={(e) => setPrice(e.target.value)}
+                                    placeholder="0.00"
+                                    step="0.1"
+                                    min="0"
+                                    className="w-full bg-neutral-800 border border-neutral-700 rounded-lg pl-4 pr-12 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors"
+                                    required
+                                />
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 font-bold">
+                                    STX
+                                </div>
+                            </div>
+                        </div>
+
+                        <Button
+                            type="submit"
+                            disabled={isSubmitting}
+                            className="w-full text-lg"
+                            size="lg"
+                            isLoading={isSubmitting}
+                        >
+                            {isSubmitting ? 'Confirming...' : 'List for Sale'}
+                        </Button>
+                    </form>
+                </div>
+            </FadeIn>
         </div>
     );
 };
