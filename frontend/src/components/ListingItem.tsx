@@ -3,6 +3,8 @@ import { Tag } from 'lucide-react';
 import { Card } from './ui/Card';
 import { Button } from './ui/Button';
 
+import { formatSTX } from '../utils/format';
+
 interface ListingItemProps {
     id: number;
     tokenId: number;
@@ -33,7 +35,7 @@ export const ListingItem: React.FC<ListingItemProps> = ({ id, tokenId, price, se
                         <p className="text-xs text-neutral-400">Seller: {seller}</p>
                     </div>
                     <div className="text-right">
-                        <div className="text-lg font-bold text-pink-400">{price} STX</div>
+                        <div className="text-lg font-bold text-pink-400">{formatSTX(price)} STX</div>
                     </div>
                 </div>
 
