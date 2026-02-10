@@ -1,3 +1,4 @@
+```typescript
 import { motion } from 'framer-motion';
 import React from 'react';
 
@@ -7,6 +8,7 @@ interface FadeInProps {
     duration?: number;
     className?: string;
     direction?: 'up' | 'down' | 'left' | 'right' | 'none';
+    onClick?: () => void;
 }
 
 export const FadeIn: React.FC<FadeInProps> = ({
@@ -14,7 +16,8 @@ export const FadeIn: React.FC<FadeInProps> = ({
     delay = 0,
     duration = 0.5,
     className = '',
-    direction = 'up'
+    direction = 'up',
+    onClick
 }) => {
     const getVariants = () => {
         const distance = 20;
@@ -48,8 +51,11 @@ export const FadeIn: React.FC<FadeInProps> = ({
             variants={getVariants()}
             transition={{ duration, delay, ease: 'easeOut' }}
             className={className}
+            onClick={onClick}
         >
             {children}
         </motion.div>
     );
 };
+
+```
