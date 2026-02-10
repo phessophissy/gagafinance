@@ -13,7 +13,7 @@ export const formatSTX = (microSTX: number | string): string => {
 
 export const formatPrice = (price: number): string => {
     return price.toLocaleString('en-US', {
-        minimumFractionDigits: 0,
+        minimumFractionDigits: 2,
         maximumFractionDigits: 2,
     });
 };

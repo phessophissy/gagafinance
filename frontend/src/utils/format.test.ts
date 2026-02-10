@@ -5,12 +5,12 @@ describe('format utils', () => {
     describe('truncateAddress', () => {
         it('should truncate address correctly with default length', () => {
             const address = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
-            expect(truncateAddress(address)).toBe('ST1PQH...ZGGM');
+            expect(truncateAddress(address)).toBe('ST1PQH...GZGM');
         });
 
         it('should truncate address with custom length', () => {
             const address = 'ST1PQHQKV0RJXZFY1DGX8MNSNYVE3VGZJSRTPGZGM';
-            expect(truncateAddress(address, 4, 4)).toBe('ST1P...ZGGM');
+            expect(truncateAddress(address, 4, 4)).toBe('ST1P...GZGM');
         });
 
         it('should return empty string if address is empty', () => {
