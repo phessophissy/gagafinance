@@ -1,4 +1,4 @@
-```
+
 import { useCallback } from 'react';
 import { useWallet } from '../components/WalletProvider';
 import { CONTRACTS } from '../config/contracts';
@@ -46,7 +46,7 @@ export const useGagaContracts = () => {
             address,
             NonFungibleConditionCode.Sends,
             assetInfo,
-            uint(tokenId)
+            uintCV(tokenId)
         );
 
         // Note: create-listing takes trait, token-id, price
