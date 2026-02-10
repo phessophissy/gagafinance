@@ -2,14 +2,15 @@ import React from 'react';
 import { Wallet, LogOut } from 'lucide-react';
 import { useWallet } from './WalletProvider';
 import { Button } from './ui/Button';
+import { truncateAddress } from '../utils/format';
 
 export const Header: React.FC = () => {
     const { connectWallet, disconnectWallet, isConnected, userData } = useWallet();
 
-    const truncateAddress = (address: string) => {
-        if (!address) return '';
-        return `${address.slice(0, 6)}...${address.slice(-4)}`;
-    };
+    // const truncateAddress = (address: string) => {
+    //     if (!address) return '';
+    //     return `${address.slice(0, 6)}...${address.slice(-4)}`;
+    // };
 
     return (
         <header className="bg-neutral-800/50 backdrop-blur-md border-b border-neutral-700 sticky top-0 z-50">
