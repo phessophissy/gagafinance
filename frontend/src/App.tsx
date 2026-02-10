@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Layout } from './components/Layout';
 import { MintNFT } from './components/MintNFT';
 import { MarketplaceFeed } from './components/MarketplaceFeed';
-import { ListingModal } from './components/ListingModal';
+// import { ListingModal } from './components/ListingModal';
 
 function App() {
-  const [isListingModalOpen, setIsListingModalOpen] = useState(false);
+  // const [isListingModalOpen, setIsListingModalOpen] = useState(false);
   // const [selectedTokenId, setSelectedTokenId] = useState<number | null>(null);
 
   // const handleListClick = (tokenId: number) => {
