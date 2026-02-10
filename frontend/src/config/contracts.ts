@@ -1,4 +1,4 @@
-import { STACKS_TESTNET } from '@stacks/network';
+
 
 // Deployment address for testnet/devnet
 // In a real app, this would be an environment variable

@@ -33,7 +33,7 @@ export const useGagaContracts = () => {
 
     const listNFT = useCallback(async (tokenId: number, price: number) => {
         if (!userSession.isUserSignedIn()) return;
-        const address = userSession.loadUserData().profile.stxAddress.testnet;
+
 
         // Post-condition: User transfers NFT to contract
         // const assetInfo = createAssetInfo(CONTRACTS.NFT.address, CONTRACTS.NFT.name, 'gaga-nft'); 
@@ -63,7 +63,7 @@ export const useGagaContracts = () => {
 
     const buyNFT = useCallback(async (listingId: number, price: number) => {
         if (!userSession.isUserSignedIn()) return;
-        const address = userSession.loadUserData().profile.stxAddress.testnet;
+
 
         // Post-condition: User sends STX to seller
         // This is tricky because we need to know the seller and the protocol fee split
@@ -81,7 +81,7 @@ export const useGagaContracts = () => {
             postConditionMode: PostConditionMode.Allow, // simplifying for dev
             postConditions: [],
             onFinish: (data) => {
-                console.log('Buy transaction finished:', data);
+                console.log('Buy transaction finished:', data, price);
             },
         });
     }, [userSession, network]);
