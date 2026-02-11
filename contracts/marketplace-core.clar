@@ -424,7 +424,10 @@
 )
 
 ;; Set protocol fee (max 10% = 1000 bps)
+;; @desc Updates the protocol fee basis points
+;; @param new-fee-bps; The new fee in basis points (max 1000)
 (define-public (set-protocol-fee-bps (new-fee-bps uint))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (asserts! (<= new-fee-bps u1000) ERR-INVALID-PRICE) ;; Max 10%
