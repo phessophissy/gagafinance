@@ -47,7 +47,8 @@ export const FadeIn: React.FC<FadeInProps> = ({
     return (
         <motion.div
             initial="hidden"
-            animate="visible"
+            whileInView="visible"
+            viewport={{ once: true }}
             variants={getVariants()}
             transition={{ duration, delay, ease: 'easeOut' }}
             className={className}
