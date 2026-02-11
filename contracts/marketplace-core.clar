@@ -326,10 +326,14 @@
 ;; ============================================
 
 ;; Buy a listed NFT
+;; @desc Purchases an NFT from a listing
+;; @param listing-id; The ID of the listing to buy
+;; @param nft-contract; The principal of the NFT contract
 (define-public (buy-listing 
   (listing-id uint)
   (nft-contract <nft-trait>)
 )
+
   (let (
     (listing (unwrap! (map-get? listings listing-id) ERR-NOT-FOUND))
     (nft-principal (contract-of nft-contract))
