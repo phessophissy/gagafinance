@@ -39,9 +39,15 @@
 ;; ============================================
 ;; DATA VARIABLES
 ;; ============================================
+;; Current token ID pointer
 (define-data-var last-token-id uint u0)
+
+;; Emergency pause state
 (define-data-var is-paused bool false)
+
+;; Contract metadata URI
 (define-data-var contract-uri (string-ascii 256) "https://api.gagafinance.io/collection/metadata")
+
 
 ;; ============================================
 ;; DATA MAPS
