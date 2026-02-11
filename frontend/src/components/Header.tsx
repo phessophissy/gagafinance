@@ -14,7 +14,7 @@ export const Header: React.FC = () => {
 
     return (
         <header className="glass-panel border-b-0 border-x-0 border-t-0 sticky top-0 z-50">
-            <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+            <div className="container mx-auto px-4 py-5 flex justify-between items-center">
                 <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center font-bold text-xl">
                         G
