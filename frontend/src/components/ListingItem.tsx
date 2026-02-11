@@ -46,8 +46,9 @@ export const ListingItem: React.FC<ListingItemProps> = ({ id, tokenId, price, se
                     variant="secondary"
                     size="sm"
                     isLoading={isBuying}
+                    aria-label={`Buy Gaga NFT #${tokenId} for ${formatSTX(price)} STX`}
                 >
-                    {!isBuying && <Tag size={16} />}
+                    {!isBuying && <Tag size={16} aria-hidden="true" />}
                     {isBuying ? 'Processing' : 'Buy Now'}
                 </Button>
             </div>
