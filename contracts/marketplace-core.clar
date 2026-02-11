@@ -438,7 +438,10 @@
 )
 
 ;; Set fee recipient
+;; @desc Updates the address that receives protocol fees
+;; @param recipient; The new fee recipient address
 (define-public (set-fee-recipient (recipient principal))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set fee-recipient recipient)
