@@ -74,6 +74,12 @@
 ;; ============================================
 
 ;; Auction data
+;; ============================================
+;; DATA MAPS
+;; ============================================
+
+;; Auction data
+;; Maps auction-id to auction details tuple
 (define-map auctions uint {
   seller: principal,
   nft-contract: principal,
@@ -89,15 +95,18 @@
 })
 
 ;; Bid tracking
+;; Maps {auction-id, bidder} to bid amount
 (define-map bids { auction-id: uint, bidder: principal } uint)
 
 ;; Auction ID by NFT
+;; Maps {nft-contract, token-id} to auction-id
 (define-map nft-to-auction { nft-contract: principal, token-id: uint } uint)
 
-;; Stats
+;; Stats counters
 (define-data-var total-auctions-created uint u0)
 (define-data-var total-auctions-settled uint u0)
 (define-data-var total-volume uint u0)
+
 
 ;; ============================================
 ;; AUTHORIZATION
