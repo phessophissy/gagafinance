@@ -477,7 +477,10 @@
 )
 
 ;; Set auction contract reference
+;; @desc Updates the auction contract principal
+;; @param contract; The new auction contract address
 (define-public (set-auction-contract (contract principal))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set auction-contract contract)
