@@ -260,7 +260,14 @@ Gagafinance/
 | **Safe Withdrawals** | Protected withdrawal patterns |
 | **Error Codes** | All errors documented for debugging |
 
+## ❓ Troubleshooting
+
+-   **Transaction Stuck**: Ensure you have enough STX for gas fees.
+-   **Verification Failed**: Check if you are on the correct network (Mainnet vs Testnet).
+-   **Wallet Not Connecting**: Refresh the page and try again, or check your browser extension permissions.
+
 ### Error Code Reference
+
 
 | Contract | Code Range | Example |
 |----------|------------|---------|
