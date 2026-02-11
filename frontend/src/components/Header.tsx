@@ -19,7 +19,7 @@ export const Header: React.FC = () => {
                     <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center font-bold text-xl">
                         G
                     </div>
-                    <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+                    <span className="text-xl font-bold text-gradient">
                         GagaFinance
                     </span>
                 </div>
