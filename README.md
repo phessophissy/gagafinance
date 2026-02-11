@@ -1,5 +1,10 @@
 # Gaga Finance - Modular NFT Marketplace
 
+![Stacks](https://img.shields.io/badge/Stacks-Mainnet-purple)
+![License](https://img.shields.io/badge/License-MIT-blue)
+![Clarinet](https://img.shields.io/badge/Clarinet-v2.0+-orange)
+
+
 A production-grade **Modular NFT Marketplace with Composable Architecture** on Stacks (Bitcoin L2) MAINNET.
 
 Built with Clarity smart contracts, TypeScript interaction scripts, and **`@stacks/connect`** for wallet integration.
