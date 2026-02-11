@@ -36,9 +36,13 @@ export const MarketplaceFeed: React.FC = () => {
                     <ShoppingBag className="text-pink-500" />
                     Marketplace
                 </h2>
-                <div className="flex gap-2">
+                <div className="flex gap-2" role="group" aria-label="Filter listings">
                     {['All', 'Recent', 'Low to High', 'High to Low'].map((filter) => (
-                        <button key={filter} className="px-4 py-2 bg-neutral-800 rounded-lg text-sm hover:bg-neutral-700 transition-colors">
+                        <button
+                            key={filter}
+                            className="px-4 py-2 bg-neutral-800 rounded-lg text-sm hover:bg-neutral-700 transition-colors"
+                            aria-label={`Sort by ${filter}`}
+                        >
                             {filter}
                         </button>
                     ))}
