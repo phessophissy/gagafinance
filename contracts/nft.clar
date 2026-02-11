@@ -1,6 +1,9 @@
 ;; Gaga Finance NFT Contract
-;; A production-grade SIP-009 NFT implementation for Stacks Mainnet
-;; Implements: minting, transfers, approvals, pausability, metadata
+;; Type: Non-Fungible Token (SIP-009)
+;; Author: Gaga Finance Team
+;; Description: A production-grade SIP-009 NFT implementation for Stacks Mainnet
+;; Features: minting, batch-minting, transfers, approvals, pausability, metadata management
+
 
 ;; ============================================
 ;; TRAITS
