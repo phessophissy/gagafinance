@@ -279,7 +279,10 @@
 )
 
 ;; Cancel a listing
+;; @desc Cancels an active listing
+;; @param listing-id; The ID of the listing to cancel
 (define-public (cancel-listing (listing-id uint))
+
   (let (
     (listing (unwrap! (map-get? listings listing-id) ERR-NOT-FOUND))
   )
