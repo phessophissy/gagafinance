@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    :focus-visible {
+        @apply outline-none ring-2 ring-purple-500 ring-offset-2 ring-offset-neutral-900;
+    }
+}
+
+@layer utilities {
+    .text-gradient {
+        @apply bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600;
+    }
+
+    .glass-panel {
+        @apply bg-neutral-800/50 backdrop-blur border border-neutral-700;
+    }
+
+    .card-hover {
+        @apply hover:border-purple-500/50 transition-all hover:scale-[1.02];
+    }
+}

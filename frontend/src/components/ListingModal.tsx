@@ -45,7 +45,7 @@ export const ListingModal: React.FC<ListingModalProps> = ({ isOpen, onClose, tok
                         <X size={24} />
                     </button>
 
-                    <h2 className="text-2xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+                    <h2 className="text-2xl font-bold mb-6 text-gradient">
                         List NFT #{tokenId}
                     </h2>
 

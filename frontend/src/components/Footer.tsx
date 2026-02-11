@@ -4,7 +4,7 @@ import { Button } from './ui/Button';
 
 export const Footer: React.FC = () => {
     return (
-        <footer className="bg-neutral-900 border-t border-neutral-800 pt-12 pb-8 mt-16">
+        <footer className="bg-neutral-900 border-t border-neutral-800 pt-16 pb-8 mt-20">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                     <div className="col-span-1 md:col-span-2">
@@ -12,7 +12,7 @@ export const Footer: React.FC = () => {
                             <div className="w-8 h-8 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center font-bold text-xl text-white">
                                 G
                             </div>
-                            <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+                            <span className="text-xl font-bold text-gradient">
                                 GagaFinance
                             </span>
                         </div>
