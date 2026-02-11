@@ -18,7 +18,7 @@ const MOCK_WALLET_NFTS = [
 export const MyNFTs: React.FC<MyNFTsProps> = ({ onList }) => {
     return (
         <div className="mt-16 w-full max-w-6xl mx-auto">
-            <h2 className="text-3xl font-bold flex items-center gap-3 mb-8">
+            <h2 className="text-3xl font-bold flex items-center gap-3 mb-8 text-gradient">
                 <span className="w-8 h-8 bg-purple-500 rounded-lg flex items-center justify-center text-sm">🦄</span>
                 Your Collection
             </h2>
