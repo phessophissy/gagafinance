@@ -405,7 +405,10 @@
 )
 
 ;; Update contract URI (owner only)
+;; @desc Updates the contract metadata URI
+;; @param new-uri; The new URI string
 (define-public (set-contract-uri (new-uri (string-ascii 256)))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set contract-uri new-uri)
