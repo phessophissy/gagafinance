@@ -308,7 +308,11 @@
 ;; ============================================
 
 ;; Approve a single token for transfer by another address
+;; @desc Approves a principal to transfer a specific token
+;; @param token-id; The ID of the token to approve
+;; @param approved; The address to approve
 (define-public (approve (token-id uint) (approved principal))
+
   (let (
     (owner (unwrap! (map-get? token-owners token-id) ERR-NOT-FOUND))
   )
