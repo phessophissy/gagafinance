@@ -95,6 +95,11 @@ See [`scripts/wallet-connect.ts`](scripts/wallet-connect.ts) for the full implem
                            └───────────────┘
 ```
 
+The modular design allows for:
+-   **Upgradability**: Individual components (like the Auction engine) can be replaced without redeploying the core.
+-   **Security**: Assets are held in the Escrow contract, separate from business logic.
+
+
 ## 📦 Contract Responsibilities
 
 | Contract | Purpose |
