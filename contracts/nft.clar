@@ -418,7 +418,11 @@
 )
 
 ;; Set token-specific URI (owner only)
+;; @desc Sets a custom URI for a specific token
+;; @param token-id; The ID of the token
+;; @param uri; The new URI string
 (define-public (set-token-uri (token-id uint) (uri (string-ascii 256)))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (asserts! (token-exists token-id) ERR-NOT-FOUND)
