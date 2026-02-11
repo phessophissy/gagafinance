@@ -13,7 +13,10 @@
 ;; ============================================
 ;; CONSTANTS - Error Codes
 ;; ============================================
-(define-constant ERR-NOT-AUTHORIZED (err u100))
+
+;; Authorization Errors
+(define-constant ERR-NOT-AUTHORIZED (err u100)) ;; Caller is not authorized
+
 (define-constant ERR-NOT-FOUND (err u101))
 (define-constant ERR-ALREADY-MINTED (err u102))
 (define-constant ERR-MAX-SUPPLY-REACHED (err u103))
