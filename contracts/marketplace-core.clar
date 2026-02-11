@@ -180,11 +180,16 @@
 ;; ============================================
 
 ;; Create a fixed-price listing
+;; @desc Creates a new active listing for an NFT
+;; @param nft-contract; The principal of the NFT contract
+;; @param token-id; The ID of the token to list
+;; @param price; The price in uSTX
 (define-public (create-listing 
   (nft-contract <nft-trait>)
   (token-id uint)
   (price uint)
 )
+
   (let (
     (listing-id (var-get next-listing-id))
     (nft-principal (contract-of nft-contract))
