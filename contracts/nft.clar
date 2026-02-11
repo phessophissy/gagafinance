@@ -237,7 +237,10 @@
 ;; ============================================
 
 ;; Mint a new NFT to recipient
+;; @desc Mints a new token to the specified recipient
+;; @param recipient; The address to receive the newly minted token
 (define-public (mint (recipient principal))
+
   (let (
     (new-token-id (+ (var-get last-token-id) u1))
   )
