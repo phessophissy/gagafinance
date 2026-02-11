@@ -1,6 +1,9 @@
 ;; Gaga Finance Marketplace Core
-;; Central orchestration contract for fixed-price listings
-;; Coordinates with Escrow, Royalty Engine, and Auction modules
+;; Type: Fixed-Price Marketplace
+;; Author: Gaga Finance Team
+;; Description: Central orchestration contract for fixed-price listings and purchases
+;; Features: listing creation, updates, cancellations, purchasing, protocol fees
+
 
 ;; ============================================
 ;; TRAITS
