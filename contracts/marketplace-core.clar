@@ -30,13 +30,15 @@
 ;; ============================================
 ;; CONFIGURATION
 ;; ============================================
+;; Contract owner for admin actions
 (define-constant CONTRACT-OWNER tx-sender)
 
 ;; Protocol fee: 2.5% (250 basis points)
 (define-constant DEFAULT-PROTOCOL-FEE-BPS u250)
 
-;; Basis points denominator
+;; Basis points denominator (10000 = 100%)
 (define-constant BPS-DENOMINATOR u10000)
+
 
 ;; ============================================
 ;; DATA VARIABLES
