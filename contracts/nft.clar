@@ -338,7 +338,10 @@
 )
 
 ;; Remove approval for a token
+;; @desc Revokes approval for a specific token
+;; @param token-id; The ID of the token to revoke approval for
 (define-public (revoke-approval (token-id uint))
+
   (let (
     (owner (unwrap! (map-get? token-owners token-id) ERR-NOT-FOUND))
   )
