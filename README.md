@@ -11,7 +11,10 @@ Built with Clarity smart contracts, TypeScript interaction scripts, and **`@stac
 
 ## 🔌 Wallet Integration with `@stacks/connect`
 
-This project uses the official **[@stacks/connect](https://github.com/hirosystems/connect)** library for seamless wallet integration with **Hiro Wallet** and **Leather Wallet**.
+This project uses the official **[@stacks/connect](https://github.com/hirosystems/connect)** library for seamless wallet integration with **Hiro Wallet**, **Xverse**, and **Leather Wallet**.
+
+For more details, check the [Stacks.js Documentation](https://stacks.js.org/).
+
 
 ### Installation
 
