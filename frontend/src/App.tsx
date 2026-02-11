@@ -32,6 +32,11 @@ function App() {
 
   return (
     <Layout>
+      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-10">
+        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-purple-500/10 rounded-full blur-[100px]" />
+        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-pink-500/10 rounded-full blur-[100px]" />
+      </div>
+
       <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-6">
         <FadeIn delay={0.2} direction="down">
           <h1 className="text-5xl font-extrabold text-gradient">
