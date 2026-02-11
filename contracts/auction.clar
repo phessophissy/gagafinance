@@ -468,7 +468,10 @@
 ;; ============================================
 
 ;; Cancel auction (only if no bids)
+;; @desc Cancels an auction if no bids have been placed
+;; @param auction-id; The ID of the auction to cancel
 (define-public (cancel-auction (auction-id uint))
+
   (let (
     (auction (unwrap! (map-get? auctions auction-id) ERR-NOT-FOUND))
   )
