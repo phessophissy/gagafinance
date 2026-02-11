@@ -18,4 +18,11 @@ This document provides guidelines for contributing to the project.
 3.  Increase the version numbers in any examples files and the README.md to the new version that this Pull Request would represent.
 4.  You may merge the Pull Request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the second reviewer to merge it for you.
 
+## Coding Standards
+
+-   **Typescript**: Use strict typing where possible. unexpected `any` is discouraged.
+-   **Clarity**: Follow standard naming conventions (kebab-case for functions and variables).
+-   **Comments**: Public functions should have comments explaining parameters and return values.
+
+
 
