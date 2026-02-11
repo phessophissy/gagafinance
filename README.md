@@ -297,3 +297,9 @@ Gagafinance/
 
 
 MIT
+
+## 🤝 Contributing
+
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Please also note that we have a [Code of Conduct](CODE_OF_CONDUCT.md) that we ask you to follow.
+
