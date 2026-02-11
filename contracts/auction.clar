@@ -536,7 +536,10 @@
 )
 
 ;; Set escrow contract
+;; @desc Updates the escrow contract principal
+;; @param contract; The new escrow contract address
 (define-public (set-escrow-contract (contract principal))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set escrow-contract contract)
