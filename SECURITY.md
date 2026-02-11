@@ -9,3 +9,9 @@ currently being supported with security updates.
 | ------- | ------------------ |
 | 1.0.x   | :white_check_mark: |
 | < 1.0   | :x:                |
+
+## Reporting a Vulnerability
+
+Please report any security vulnerabilities to the maintainers via email.
+We will acknowledge receipt of your vulnerability report within 48 hours.
+
