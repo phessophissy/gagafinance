@@ -34,14 +34,14 @@ export const Footer: React.FC = () => {
                     <div>
                         <h4 className="font-bold text-white mb-4">Community</h4>
                         <div className="flex gap-2">
-                            <Button variant="ghost" size="sm" className="!p-2">
-                                <Twitter size={20} />
+                            <Button variant="ghost" size="sm" className="!p-2" aria-label="Follow us on Twitter">
+                                <Twitter size={20} aria-hidden="true" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="!p-2">
-                                <Github size={20} />
+                            <Button variant="ghost" size="sm" className="!p-2" aria-label="Visit our GitHub">
+                                <Github size={20} aria-hidden="true" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="!p-2">
-                                <Globe size={20} />
+                            <Button variant="ghost" size="sm" className="!p-2" aria-label="Visit our Website">
+                                <Globe size={20} aria-hidden="true" />
                             </Button>
                         </div>
                     </div>
