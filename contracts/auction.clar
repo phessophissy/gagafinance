@@ -549,7 +549,10 @@
 )
 
 ;; Set royalty contract
+;; @desc Updates the royalty engine contract principal
+;; @param contract; The new royalty engine contract address
 (define-public (set-royalty-contract (contract principal))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set royalty-contract contract)
