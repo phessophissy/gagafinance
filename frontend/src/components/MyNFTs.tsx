@@ -26,7 +26,7 @@ export const MyNFTs: React.FC<MyNFTsProps> = ({ onList }) => {
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 {MOCK_WALLET_NFTS.map((nft, index) => (
                     <FadeIn key={nft.id} delay={index * 0.1}>
-                        <Card className="!p-0 overflow-hidden hover:border-purple-500/50 transition-all group">
+                        <Card className="!p-0 overflow-hidden card-hover group">
                             <div className="aspect-square bg-neutral-800 flex items-center justify-center relative overflow-hidden">
                                 <img
                                     src={`https://api.dicebear.com/7.x/shapes/svg?seed=${nft.tokenId}`}
