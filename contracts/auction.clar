@@ -368,7 +368,10 @@
 ;; ============================================
 
 ;; Settle (finalize) an auction
+;; @desc Finalizes the auction, transferring NFT and funds
+;; @param auction-id; The ID of the auction to settle
 (define-public (settle-auction (auction-id uint))
+
   (let (
     (auction (unwrap! (map-get? auctions auction-id) ERR-NOT-FOUND))
   )
