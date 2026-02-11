@@ -218,6 +218,12 @@
 ;; ============================================
 
 ;; Create a new auction
+;; @desc Creates a new English auction for an NFT
+;; @param nft-contract; The principal of the NFT contract
+;; @param token-id; The ID of the token to auction
+;; @param start-price; The starting bid price in uSTX
+;; @param reserve-price; The minimum price to settle the auction
+;; @param duration-blocks; The length of the auction in blocks
 (define-public (create-auction 
   (nft-contract principal)
   (token-id uint)
@@ -225,6 +231,7 @@
   (reserve-price uint)
   (duration-blocks uint)
 )
+
   (let (
     (auction-id (var-get next-auction-id))
     (end-block (+ stacks-block-height duration-blocks))
