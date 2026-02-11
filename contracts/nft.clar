@@ -133,7 +133,10 @@
 )
 
 ;; Get token URI for a specific token
+;; @desc Returns the metadata URI for a token
+;; @param token-id; The ID of the token
 (define-read-only (get-token-uri (token-id uint))
+
   (if (<= token-id (var-get last-token-id))
     (ok (some (default-to 
       BASE-URI
