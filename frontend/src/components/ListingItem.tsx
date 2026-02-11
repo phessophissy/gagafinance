@@ -16,7 +16,7 @@ interface ListingItemProps {
 
 export const ListingItem: React.FC<ListingItemProps> = ({ id, tokenId, price, seller, isBuying, onBuy }) => {
     return (
-        <Card className="!p-0 overflow-hidden hover:border-pink-500/50 transition-all group">
+        <Card className="!p-0 overflow-hidden card-hover group">
             <div className="aspect-square bg-neutral-800 flex items-center justify-center relative overflow-hidden">
                 <img
                     src={`https://api.dicebear.com/7.x/shapes/svg?seed=${tokenId}`}
