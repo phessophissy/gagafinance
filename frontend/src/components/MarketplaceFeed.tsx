@@ -32,7 +32,7 @@ export const MarketplaceFeed: React.FC = () => {
     return (
         <div className="mt-16 w-full max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-8">
-                <h2 className="text-3xl font-bold flex items-center gap-3">
+                <h2 className="text-3xl font-bold flex items-center gap-3 text-gradient">
                     <ShoppingBag className="text-pink-500" />
                     Marketplace
                 </h2>
