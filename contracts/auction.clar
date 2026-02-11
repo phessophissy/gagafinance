@@ -31,6 +31,10 @@
 ;; ============================================
 ;; CONFIGURATION
 ;; ============================================
+;; ============================================
+;; CONFIGURATION
+;; ============================================
+;; Contract owner
 (define-constant CONTRACT-OWNER tx-sender)
 
 ;; Min/max auction durations in blocks (~10 min/block on Stacks)
@@ -46,6 +50,7 @@
 
 ;; Protocol fee (basis points)
 (define-constant PROTOCOL-FEE-BPS u250)         ;; 2.5%
+
 
 ;; ============================================
 ;; DATA VARIABLES
