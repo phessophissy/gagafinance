@@ -363,7 +363,11 @@
 )
 
 ;; Set approval for all tokens (operator)
+;; @desc Approves an operator to transfer all tokens owned by the caller
+;; @param operator; The address to approve as operator
+;; @param approved; True to approve, false to revoke
 (define-public (set-approval-for-all (operator principal) (approved bool))
+
   (begin
     ;; Cannot approve self
     (asserts! (not (is-eq tx-sender operator)) ERR-INVALID-PRINCIPAL)
