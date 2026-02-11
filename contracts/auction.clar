@@ -1,6 +1,9 @@
 ;; Gaga Finance Auction Contract
-;; Timed auctions with bid tracking, anti-sniping, and settlement
-;; Coordinates with Escrow and Royalty Engine for secure transactions
+;; Type: English Auction (Timed)
+;; Author: Gaga Finance Team
+;; Description: Timed auctions with bid tracking, anti-sniping, and settlement
+;; Features: auction creation, bidding, settlement, cancellation, anti-sniping
+
 
 ;; ============================================
 ;; CONSTANTS - Error Codes
