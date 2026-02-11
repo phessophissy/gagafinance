@@ -13,18 +13,19 @@
 ;; ============================================
 ;; CONSTANTS - Error Codes
 ;; ============================================
-(define-constant ERR-NOT-AUTHORIZED (err u500))
-(define-constant ERR-NOT-FOUND (err u501))
-(define-constant ERR-LISTING-EXISTS (err u502))
-(define-constant ERR-LISTING-NOT-ACTIVE (err u503))
-(define-constant ERR-INSUFFICIENT-FUNDS (err u504))
-(define-constant ERR-TRANSFER-FAILED (err u505))
-(define-constant ERR-CONTRACT-PAUSED (err u506))
-(define-constant ERR-INVALID-PRICE (err u507))
-(define-constant ERR-CANNOT-BUY-OWN (err u508))
-(define-constant ERR-NOT-TOKEN-OWNER (err u509))
-(define-constant ERR-NOT-SELLER (err u510))
-(define-constant ERR-NFT-NOT-APPROVED (err u511))
+(define-constant ERR-NOT-AUTHORIZED (err u500)) ;; Caller not authorized
+(define-constant ERR-NOT-FOUND (err u501)) ;; Resource not found
+(define-constant ERR-LISTING-EXISTS (err u502)) ;; Listing already exists
+(define-constant ERR-LISTING-NOT-ACTIVE (err u503)) ;; Listing is inactive
+(define-constant ERR-INSUFFICIENT-FUNDS (err u504)) ;; Buyer has insufficient funds
+(define-constant ERR-TRANSFER-FAILED (err u505)) ;; STX/NFT transfer failed
+(define-constant ERR-CONTRACT-PAUSED (err u506)) ;; Contract is paused
+(define-constant ERR-INVALID-PRICE (err u507)) ;; Price is invalid
+(define-constant ERR-CANNOT-BUY-OWN (err u508)) ;; Seller cannot buy own listing
+(define-constant ERR-NOT-TOKEN-OWNER (err u509)) ;; Caller does not own token
+(define-constant ERR-NOT-SELLER (err u510)) ;; Caller is not the seller
+(define-constant ERR-NFT-NOT-APPROVED (err u511)) ;; Contract not approved to transfer NFT
+
 
 ;; ============================================
 ;; CONFIGURATION
