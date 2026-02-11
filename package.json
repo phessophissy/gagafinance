@@ -8,10 +8,19 @@
   "scripts": {
     "test": "vitest run",
     "test:report": "vitest run -- --coverage --costs",
-    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\""
+    "test:watch": "chokidar \"tests/**/*.ts\" \"contracts/**/*.clar\" -c \"npm run test:report\"",
+    "interact": "tsx scripts/interact.ts",
+    "mint": "tsx scripts/mint.ts",
+    "listing": "tsx scripts/listing.ts",
+    "buying": "tsx scripts/buying.ts",
+    "auction": "tsx scripts/auction.ts",
+    "wallets": "tsx scripts/quick-wallets.ts"
   },
   "author": "",
   "license": "ISC",
+  "devDependencies": {
+    "tsx": "^4.7.1"
+  },
   "dependencies": {
     "@stacks/clarinet-sdk": "^3.9.0",
     "@stacks/transactions": "^7.2.0",
