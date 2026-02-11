@@ -195,7 +195,12 @@
 ;; ============================================
 
 ;; Transfer token from sender to recipient
+;; @desc Transfers a token to a new owner
+;; @param token-id; The ID of the token to transfer
+;; @param sender; The current owner of the token
+;; @param recipient; The address to receive the token
 (define-public (transfer (token-id uint) (sender principal) (recipient principal))
+
   (begin
     ;; Validate not paused
     (try! (assert-not-paused))
