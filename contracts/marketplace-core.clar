@@ -411,7 +411,10 @@
 ;; ============================================
 
 ;; Pause contract
+;; @desc Pauses or unpauses the marketplace
+;; @param paused; True to pause, false to unpause
 (define-public (set-paused (paused bool))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set is-paused paused)
