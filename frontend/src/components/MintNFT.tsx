@@ -13,7 +13,7 @@ export const MintNFT: React.FC = () => {
         <Card className="max-w-sm mx-auto mt-8">
             <div className="flex flex-col items-center text-center gap-4">
                 <div className="w-16 h-16 bg-neutral-700 rounded-full flex items-center justify-center">
-                    <Hammer className="text-purple-400" size={32} />
+                    <Hammer className="text-purple-400" size={32} aria-hidden="true" />
                 </div>
 
                 <div>
