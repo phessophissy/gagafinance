@@ -392,7 +392,10 @@
 ;; ============================================
 
 ;; Pause contract (owner only)
+;; @desc Pauses or unpauses minting and transfers
+;; @param paused; True to pause, false to unpause
 (define-public (set-paused (paused bool))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set is-paused paused)
