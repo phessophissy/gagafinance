@@ -55,12 +55,19 @@
 ;; ============================================
 ;; DATA VARIABLES
 ;; ============================================
+;; ============================================
+;; DATA VARIABLES
+;; ============================================
+;; Contract state
 (define-data-var is-paused bool false)
 (define-data-var next-auction-id uint u1)
 (define-data-var fee-recipient principal CONTRACT-OWNER)
+
+;; Module references
 (define-data-var escrow-contract principal CONTRACT-OWNER)
 (define-data-var royalty-contract principal CONTRACT-OWNER)
 (define-data-var marketplace-contract principal CONTRACT-OWNER)
+
 
 ;; ============================================
 ;; DATA MAPS
