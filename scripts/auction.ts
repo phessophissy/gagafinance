@@ -28,6 +28,7 @@ import {
     formatSTX,
     randomBigInt,
 } from './utils/helpers.js';
+import { logger } from './utils/logger.js';
 
 interface WalletInfo {
     index: number;
@@ -176,18 +177,18 @@ async function settleAuction(
  * Main function
  */
 async function main() {
-    console.log('\n╔══════════════════════════════════════════════════════════════╗');
-    console.log('║           GAGA FINANCE - AUCTION SCRIPT                      ║');
-    console.log('╠══════════════════════════════════════════════════════════════╣');
-    console.log('║  Creating auctions and placing bids on Stacks MAINNET        ║');
-    console.log('╚══════════════════════════════════════════════════════════════╝\n');
+    logger.info('\n╔══════════════════════════════════════════════════════════════╗');
+    logger.info('║           GAGA FINANCE - AUCTION SCRIPT                      ║');
+    logger.info('╠══════════════════════════════════════════════════════════════╣');
+    logger.info('║  Creating auctions and placing bids on Stacks MAINNET        ║');
+    logger.info('╚══════════════════════════════════════════════════════════════╝\n');
 
     // Load wallets
     const wallets = loadWallets();
-    console.log(`📁 Loaded ${wallets.length} wallets\n`);
+    logger.info(`📁 Loaded ${wallets.length} wallets\n`);
 
     if (wallets.length < 3) {
-        console.log('❌ Need at least 3 wallets for auction demo\n');
+        logger.warn('❌ Need at least 3 wallets for auction demo\n');
         return;
     }
 
@@ -209,8 +210,8 @@ async function main() {
         }
     }
 
-    console.log(`📝 Auction Contract: ${getContractId(CONTRACTS.AUCTION)}\n`);
-    console.log(`🎯 Mode: ${mode}\n`);
+    logger.info(`📝 Auction Contract: ${getContractId(CONTRACTS.AUCTION)}\n`);
+    logger.info(`🎯 Mode: ${mode}\n`);
 
     const results: AuctionResult[] = [];
     let successCount = 0;
@@ -222,12 +223,12 @@ async function main() {
         const startPrice = randomBigInt(PRICE_RANGE.MIN_AUCTION_START, PRICE_RANGE.MAX_AUCTION_START);
         const reservePrice = startPrice + startPrice / 2n; // 50% higher
 
-        console.log('📦 CREATING AUCTION');
-        console.log(`   Seller: ${seller.address}`);
-        console.log(`   Token ID: ${tokenId}`);
-        console.log(`   Start Price: ${formatSTX(startPrice)}`);
-        console.log(`   Reserve: ${formatSTX(reservePrice)}`);
-        console.log(`   Duration: ${AUCTION_CONFIG.DEFAULT_DURATION} blocks\n`);
+        logger.info('📦 CREATING AUCTION');
+        logger.info(`   Seller: ${seller.address}`);
+        logger.info(`   Token ID: ${tokenId}`);
+        logger.info(`   Start Price: ${formatSTX(startPrice)}`);
+        logger.info(`   Reserve: ${formatSTX(reservePrice)}`);
+        logger.info(`   Duration: ${AUCTION_CONFIG.DEFAULT_DURATION} blocks\n`);
 
         try {
             const { txId } = await createAuction(
@@ -249,7 +250,7 @@ async function main() {
             });
 
             successCount++;
-            console.log(`  ✅ Auction created! TX: ${txId}\n`);
+            logger.success(`  ✅ Auction created! TX: ${txId}\n`);
 
         } catch (error: any) {
             results.push({
@@ -263,7 +264,7 @@ async function main() {
             });
 
             failCount++;
-            console.log(`  ❌ Error: ${error.message}\n`);
+            logger.error(`  ❌ Error: ${error.message}\n`);
         }
 
         await sleep(RATE_LIMIT.TX_DELAY_MS);
@@ -271,7 +272,7 @@ async function main() {
 
     if (mode === 'bid' || mode === 'full') {
         // Place bids from other wallets
-        console.log('💰 PLACING BIDS');
+        logger.info('💰 PLACING BIDS');
 
         let currentBid = randomBigInt(PRICE_RANGE.MIN_AUCTION_START, PRICE_RANGE.MAX_AUCTION_START);
 
@@ -279,8 +280,8 @@ async function main() {
             const bidder = wallets[i];
             currentBid = currentBid + currentBid / 10n; // 10% increment
 
-            console.log(`   Bidder ${i}: ${bidder.address}`);
-            console.log(`   Bid Amount: ${formatSTX(currentBid)}`);
+            logger.info(`   Bidder ${i}: ${bidder.address}`);
+            logger.info(`   Bid Amount: ${formatSTX(currentBid)}`);
 
             try {
                 const { txId } = await placeBid(
@@ -300,7 +301,7 @@ async function main() {
                 });
 
                 successCount++;
-                console.log(`  ✅ Bid placed! TX: ${txId}\n`);
+                logger.success(`  ✅ Bid placed! TX: ${txId}\n`);
 
             } catch (error: any) {
                 results.push({
@@ -314,7 +315,7 @@ async function main() {
                 });
 
                 failCount++;
-                console.log(`  ❌ Error: ${error.message}\n`);
+                logger.error(`  ❌ Error: ${error.message}\n`);
             }
 
             await sleep(RATE_LIMIT.TX_DELAY_MS);
@@ -323,7 +324,7 @@ async function main() {
 
     if (mode === 'settle') {
         // Settle auction (anyone can call after end)
-        console.log('🏁 SETTLING AUCTION');
+        logger.info('🏁 SETTLING AUCTION');
 
         const settler = wallets[0];
 
@@ -343,7 +344,7 @@ async function main() {
             });
 
             successCount++;
-            console.log(`  ✅ Auction settled! TX: ${txId}\n`);
+            logger.success(`  ✅ Auction settled! TX: ${txId}\n`);
 
         } catch (error: any) {
             results.push({
@@ -356,22 +357,22 @@ async function main() {
             });
 
             failCount++;
-            console.log(`  ❌ Error: ${error.message}\n`);
+            logger.error(`  ❌ Error: ${error.message}\n`);
         }
     }
 
     // Summary
-    console.log('\n' + '═'.repeat(60));
-    console.log('📊 AUCTION SUMMARY');
-    console.log('═'.repeat(60));
-    console.log(`  Total Attempts: ${results.length}`);
-    console.log(`  ✅ Successful:  ${successCount}`);
-    console.log(`  ❌ Failed:      ${failCount}`);
-    console.log('═'.repeat(60));
+    logger.info('\n' + '═'.repeat(60));
+    logger.info('📊 AUCTION SUMMARY');
+    logger.info('═'.repeat(60));
+    logger.info(`  Total Attempts: ${results.length}`);
+    logger.success(`  ✅ Successful:  ${successCount}`);
+    logger.error(`  ❌ Failed:      ${failCount}`);
+    logger.info('═'.repeat(60));
 
     // Save results
     fs.writeFileSync(FILES.AUCTIONS, JSON.stringify(results, null, 2));
-    console.log(`\n📁 Results saved to: ${FILES.AUCTIONS}\n`);
+    logger.info(`\n📁 Results saved to: ${FILES.AUCTIONS}\n`);
 }
 
-main().catch(console.error);
+main().catch(logger.error);

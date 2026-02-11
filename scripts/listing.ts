@@ -27,6 +27,7 @@ import {
     formatSTX,
     randomBigInt,
 } from './utils/helpers.js';
+import { logger } from './utils/logger.js';
 
 interface WalletInfo {
     index: number;
@@ -102,15 +103,15 @@ async function createListing(
  * Main function
  */
 async function main() {
-    console.log('\n╔══════════════════════════════════════════════════════════════╗');
-    console.log('║           GAGA FINANCE - LISTING SCRIPT                      ║');
-    console.log('╠══════════════════════════════════════════════════════════════╣');
-    console.log('║  Creating marketplace listings on Stacks MAINNET             ║');
-    console.log('╚══════════════════════════════════════════════════════════════╝\n');
+    logger.info('\n╔══════════════════════════════════════════════════════════════╗');
+    logger.info('║           GAGA FINANCE - LISTING SCRIPT                      ║');
+    logger.info('╠══════════════════════════════════════════════════════════════╣');
+    logger.info('║  Creating marketplace listings on Stacks MAINNET             ║');
+    logger.info('╚══════════════════════════════════════════════════════════════╝\n');
 
     // Load wallets
     const wallets = loadWallets();
-    console.log(`📁 Loaded ${wallets.length} wallets\n`);
+    logger.info(`📁 Loaded ${wallets.length} wallets\n`);
 
     // Parse arguments
     const args = process.argv.slice(2);
@@ -126,8 +127,8 @@ async function main() {
         }
     }
 
-    console.log(`📋 Creating ${listingsPerWallet} listing(s) per wallet...\n`);
-    console.log(`📝 Marketplace: ${getContractId(CONTRACTS.MARKETPLACE_CORE)}\n`);
+    logger.info(`📋 Creating ${listingsPerWallet} listing(s) per wallet...\n`);
+    logger.info(`📝 Marketplace: ${getContractId(CONTRACTS.MARKETPLACE_CORE)}\n`);
 
     const results: ListingResult[] = [];
     let successCount = 0;
@@ -141,8 +142,8 @@ async function main() {
             // Generate random price
             const price = randomBigInt(PRICE_RANGE.MIN_LISTING_PRICE, PRICE_RANGE.MAX_LISTING_PRICE);
 
-            console.log(`⏳ Creating listing for wallet ${i + 1}/${wallets.length}...`);
-            console.log(`   Token ID: ${tokenId}, Price: ${formatSTX(price)}`);
+            logger.info(`⏳ Creating listing for wallet ${i + 1}/${wallets.length}...`);
+            logger.info(`   Token ID: ${tokenId}, Price: ${formatSTX(price)}`);
 
             try {
                 const nonce = BigInt(l);
@@ -159,7 +160,7 @@ async function main() {
                 });
 
                 successCount++;
-                console.log(`  ✅ TX: ${txId}`);
+                logger.success(`  ✅ TX: ${txId}`);
 
             } catch (error: any) {
                 results.push({
@@ -173,7 +174,7 @@ async function main() {
                 });
 
                 failCount++;
-                console.log(`  ❌ Error: ${error.message}`);
+                logger.error(`  ❌ Error: ${error.message}`);
             }
 
             tokenId++;
@@ -184,17 +185,17 @@ async function main() {
     }
 
     // Summary
-    console.log('\n' + '═'.repeat(60));
-    console.log('📊 LISTING SUMMARY');
-    console.log('═'.repeat(60));
-    console.log(`  Total Attempts: ${results.length}`);
-    console.log(`  ✅ Successful:  ${successCount}`);
-    console.log(`  ❌ Failed:      ${failCount}`);
-    console.log('═'.repeat(60));
+    logger.info('\n' + '═'.repeat(60));
+    logger.info('📊 LISTING SUMMARY');
+    logger.info('═'.repeat(60));
+    logger.info(`  Total Attempts: ${results.length}`);
+    logger.success(`  ✅ Successful:  ${successCount}`);
+    logger.error(`  ❌ Failed:      ${failCount}`);
+    logger.info('═'.repeat(60));
 
     // Save results
     fs.writeFileSync(FILES.LISTINGS, JSON.stringify(results, null, 2));
-    console.log(`\n📁 Results saved to: ${FILES.LISTINGS}\n`);
+    logger.info(`\n📁 Results saved to: ${FILES.LISTINGS}\n`);
 }
 
-main().catch(console.error);
+main().catch(logger.error);

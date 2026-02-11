@@ -25,6 +25,7 @@ import {
     sleep,
     formatSTX,
 } from './utils/helpers.js';
+import { logger } from './utils/logger.js';
 
 interface WalletInfo {
     index: number;
@@ -116,25 +117,25 @@ async function buyListing(
  * Main function
  */
 async function main() {
-    console.log('\n╔══════════════════════════════════════════════════════════════╗');
-    console.log('║           GAGA FINANCE - BUYING SCRIPT                       ║');
-    console.log('╠══════════════════════════════════════════════════════════════╣');
-    console.log('║  Buying NFTs from marketplace on Stacks MAINNET              ║');
-    console.log('╚══════════════════════════════════════════════════════════════╝\n');
+    logger.info('\n╔══════════════════════════════════════════════════════════════╗');
+    logger.info('║           GAGA FINANCE - BUYING SCRIPT                       ║');
+    logger.info('╠══════════════════════════════════════════════════════════════╣');
+    logger.info('║  Buying NFTs from marketplace on Stacks MAINNET              ║');
+    logger.info('╚══════════════════════════════════════════════════════════════╝\n');
 
     // Load wallets and listings
     const wallets = loadWallets();
     const listings = loadListings();
 
-    console.log(`📁 Loaded ${wallets.length} wallets`);
-    console.log(`📋 Loaded ${listings.length} active listings\n`);
+    logger.info(`📁 Loaded ${wallets.length} wallets`);
+    logger.info(`📋 Loaded ${listings.length} active listings\n`);
 
     if (listings.length === 0) {
-        console.log('❌ No listings available to buy. Run listing script first.\n');
+        logger.warn('❌ No listings available to buy. Run listing script first.\n');
         return;
     }
 
-    console.log(`📝 Marketplace: ${getContractId(CONTRACTS.MARKETPLACE_CORE)}\n`);
+    logger.info(`📝 Marketplace: ${getContractId(CONTRACTS.MARKETPLACE_CORE)}\n`);
 
     const results: BuyResult[] = [];
     let successCount = 0;
@@ -148,12 +149,12 @@ async function main() {
         const listing = listings.find(l => l.wallet !== wallet.address);
 
         if (!listing || listing.listingId === null) {
-            console.log(`⏭️  Skipping wallet ${i + 1}: No suitable listing found`);
+            logger.info(`⏭️  Skipping wallet ${i + 1}: No suitable listing found`);
             continue;
         }
 
-        console.log(`⏳ Wallet ${i + 1} buying listing ${listing.listingId}...`);
-        console.log(`   Price: ${listing.price}`);
+        logger.info(`⏳ Wallet ${i + 1} buying listing ${listing.listingId}...`);
+        logger.info(`   Price: ${listing.price}`);
 
         try {
             const nonce = BigInt(0);
@@ -168,7 +169,7 @@ async function main() {
             });
 
             successCount++;
-            console.log(`  ✅ TX: ${txId}`);
+            logger.success(`  ✅ TX: ${txId}`);
 
         } catch (error: any) {
             results.push({
@@ -180,7 +181,7 @@ async function main() {
             });
 
             failCount++;
-            console.log(`  ❌ Error: ${error.message}`);
+            logger.error(`  ❌ Error: ${error.message}`);
         }
 
         // Rate limiting
@@ -188,18 +189,18 @@ async function main() {
     }
 
     // Summary
-    console.log('\n' + '═'.repeat(60));
-    console.log('📊 BUYING SUMMARY');
-    console.log('═'.repeat(60));
-    console.log(`  Total Attempts: ${results.length}`);
-    console.log(`  ✅ Successful:  ${successCount}`);
-    console.log(`  ❌ Failed:      ${failCount}`);
-    console.log('═'.repeat(60));
+    logger.info('\n' + '═'.repeat(60));
+    logger.info('📊 BUYING SUMMARY');
+    logger.info('═'.repeat(60));
+    logger.info(`  Total Attempts: ${results.length}`);
+    logger.success(`  ✅ Successful:  ${successCount}`);
+    logger.error(`  ❌ Failed:      ${failCount}`);
+    logger.info('═'.repeat(60));
 
     // Save results
     const outputFile = 'buy-results.json';
     fs.writeFileSync(outputFile, JSON.stringify(results, null, 2));
-    console.log(`\n📁 Results saved to: ${outputFile}\n`);
+    logger.info(`\n📁 Results saved to: ${outputFile}\n`);
 }
 
-main().catch(console.error);
+main().catch(logger.error);
