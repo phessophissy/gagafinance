@@ -562,7 +562,10 @@
 )
 
 ;; Set marketplace contract
+;; @desc Updates the marketplace contract principal
+;; @param contract; The new marketplace contract address
 (define-public (set-marketplace-contract (contract principal))
+
   (begin
     (asserts! (is-contract-owner) ERR-NOT-AUTHORIZED)
     (var-set marketplace-contract contract)
