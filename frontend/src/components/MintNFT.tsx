@@ -17,7 +17,7 @@ export const MintNFT: React.FC = () => {
                 </div>
 
                 <div>
-                    <h2 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">
+                    <h2 className="text-2xl font-bold text-gradient">
                         Mint Gaga NFT
                     </h2>
                     <p className="text-neutral-400 text-sm mt-2">
