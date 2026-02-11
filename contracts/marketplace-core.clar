@@ -43,6 +43,7 @@
 ;; ============================================
 ;; DATA VARIABLES
 ;; ============================================
+;; Contract state
 (define-data-var is-paused bool false)
 (define-data-var next-listing-id uint u1)
 (define-data-var protocol-fee-bps uint DEFAULT-PROTOCOL-FEE-BPS)
@@ -53,11 +54,12 @@
 (define-data-var royalty-contract principal CONTRACT-OWNER)
 (define-data-var auction-contract principal CONTRACT-OWNER)
 
-;; Stats
+;; Stats counters
 (define-data-var total-listings uint u0)
 (define-data-var total-sales uint u0)
 (define-data-var total-volume uint u0)
 (define-data-var total-fees-collected uint u0)
+
 
 ;; ============================================
 ;; DATA MAPS
