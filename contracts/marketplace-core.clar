@@ -66,6 +66,7 @@
 ;; ============================================
 
 ;; Fixed-price listings
+;; Maps listing-id to listing details tuple
 (define-map listings uint {
   seller: principal,
   nft-contract: principal,
@@ -76,10 +77,13 @@
 })
 
 ;; NFT to listing ID mapping
+;; Maps {nft-contract, token-id} to listing-id
 (define-map nft-to-listing { nft-contract: principal, token-id: uint } uint)
 
 ;; Seller's active listings count
+;; Maps seller principal to count of active listings
 (define-map seller-listing-count principal uint)
+
 
 ;; ============================================
 ;; AUTHORIZATION
