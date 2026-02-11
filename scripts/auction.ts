@@ -1,0 +1,378 @@
+/**
+ * Gaga Finance - Auction Script
+ * Creates auctions, places bids, and finalizes auctions
+ */
+
+import * as fs from 'fs';
+import {
+    makeContractCall,
+    broadcastTransaction,
+    AnchorMode,
+    PostConditionMode,
+    contractPrincipalCV,
+    uintCV,
+} from '@stacks/transactions';
+import {
+    NETWORK,
+    DEPLOYER_ADDRESS,
+    CONTRACTS,
+    TX_CONFIG,
+    RATE_LIMIT,
+    FILES,
+    PRICE_RANGE,
+    AUCTION_CONFIG,
+    getContractId,
+} from './config.js';
+import {
+    sleep,
+    formatSTX,
+    randomBigInt,
+} from './utils/helpers.js';
+import { logger } from './utils/logger.js';
+
+interface WalletInfo {
+    index: number;
+    address: string;
+    privateKey: string;
+}
+
+interface WalletFile {
+    wallets: WalletInfo[];
+}
+
+interface AuctionResult {
+    action: 'create' | 'bid' | 'settle';
+    wallet: string;
+    auctionId: number | null;
+    tokenId?: number;
+    bidAmount?: string;
+    txId: string | null;
+    success: boolean;
+    error?: string;
+}
+
+/**
+ * Load wallets from file
+ */
+function loadWallets(): WalletInfo[] {
+    if (!fs.existsSync(FILES.WALLETS)) {
+        throw new Error(`Wallet file not found: ${FILES.WALLETS}. Run wallet-generator first.`);
+    }
+
+    const data = JSON.parse(fs.readFileSync(FILES.WALLETS, 'utf-8')) as WalletFile;
+    return data.wallets;
+}
+
+/**
+ * Create an auction
+ */
+async function createAuction(
+    privateKey: string,
+    tokenId: number,
+    startPrice: bigint,
+    reservePrice: bigint,
+    durationBlocks: number,
+    nonce: bigint
+): Promise<{ txId: string }> {
+    const nftContractPrincipal = contractPrincipalCV(DEPLOYER_ADDRESS, CONTRACTS.NFT);
+
+    const txOptions = {
+        contractAddress: DEPLOYER_ADDRESS,
+        contractName: CONTRACTS.AUCTION,
+        functionName: 'create-auction',
+        functionArgs: [
+            nftContractPrincipal,
+            uintCV(tokenId),
+            uintCV(startPrice),
+            uintCV(reservePrice),
+            uintCV(durationBlocks),
+        ],
+        senderKey: privateKey,
+        network: NETWORK,
+        anchorMode: AnchorMode.Any,
+        postConditionMode: PostConditionMode.Allow,
+        fee: TX_CONFIG.MAX_FEE,
+        nonce,
+    };
+
+    const transaction = await makeContractCall(txOptions);
+    const result = await broadcastTransaction(transaction, NETWORK);
+
+    if ('error' in result) {
+        throw new Error(result.error);
+    }
+
+    return { txId: result.txid };
+}
+
+/**
+ * Place a bid on an auction
+ */
+async function placeBid(
+    privateKey: string,
+    auctionId: number,
+    bidAmount: bigint,
+    nonce: bigint
+): Promise<{ txId: string }> {
+    const txOptions = {
+        contractAddress: DEPLOYER_ADDRESS,
+        contractName: CONTRACTS.AUCTION,
+        functionName: 'place-bid',
+        functionArgs: [
+            uintCV(auctionId),
+            uintCV(bidAmount),
+        ],
+        senderKey: privateKey,
+        network: NETWORK,
+        anchorMode: AnchorMode.Any,
+        postConditionMode: PostConditionMode.Allow,
+        fee: TX_CONFIG.MAX_FEE,
+        nonce,
+    };
+
+    const transaction = await makeContractCall(txOptions);
+    const result = await broadcastTransaction(transaction, NETWORK);
+
+    if ('error' in result) {
+        throw new Error(result.error);
+    }
+
+    return { txId: result.txid };
+}
+
+/**
+ * Settle (finalize) an auction
+ */
+async function settleAuction(
+    privateKey: string,
+    auctionId: number,
+    nonce: bigint
+): Promise<{ txId: string }> {
+    const txOptions = {
+        contractAddress: DEPLOYER_ADDRESS,
+        contractName: CONTRACTS.AUCTION,
+        functionName: 'settle-auction',
+        functionArgs: [
+            uintCV(auctionId),
+        ],
+        senderKey: privateKey,
+        network: NETWORK,
+        anchorMode: AnchorMode.Any,
+        postConditionMode: PostConditionMode.Allow,
+        fee: TX_CONFIG.MAX_FEE,
+        nonce,
+    };
+
+    const transaction = await makeContractCall(txOptions);
+    const result = await broadcastTransaction(transaction, NETWORK);
+
+    if ('error' in result) {
+        throw new Error(result.error);
+    }
+
+    return { txId: result.txid };
+}
+
+/**
+ * Main function
+ */
+async function main() {
+    logger.info('\n╔══════════════════════════════════════════════════════════════╗');
+    logger.info('║           GAGA FINANCE - AUCTION SCRIPT                      ║');
+    logger.info('╠══════════════════════════════════════════════════════════════╣');
+    logger.info('║  Creating auctions and placing bids on Stacks MAINNET        ║');
+    logger.info('╚══════════════════════════════════════════════════════════════╝\n');
+
+    // Load wallets
+    const wallets = loadWallets();
+    logger.info(`📁 Loaded ${wallets.length} wallets\n`);
+
+    if (wallets.length < 3) {
+        logger.warn('❌ Need at least 3 wallets for auction demo\n');
+        return;
+    }
+
+    // Parse arguments
+    const args = process.argv.slice(2);
+    let mode: 'create' | 'bid' | 'settle' | 'full' = 'full';
+    let auctionId = 1;
+    let tokenId = 1;
+
+    for (const arg of args) {
+        if (arg.startsWith('--mode=')) {
+            mode = arg.split('=')[1] as any;
+        }
+        if (arg.startsWith('--auction-id=')) {
+            auctionId = parseInt(arg.split('=')[1], 10) || 1;
+        }
+        if (arg.startsWith('--token-id=')) {
+            tokenId = parseInt(arg.split('=')[1], 10) || 1;
+        }
+    }
+
+    logger.info(`📝 Auction Contract: ${getContractId(CONTRACTS.AUCTION)}\n`);
+    logger.info(`🎯 Mode: ${mode}\n`);
+
+    const results: AuctionResult[] = [];
+    let successCount = 0;
+    let failCount = 0;
+
+    if (mode === 'create' || mode === 'full') {
+        // Create auction with first wallet
+        const seller = wallets[0];
+        const startPrice = randomBigInt(PRICE_RANGE.MIN_AUCTION_START, PRICE_RANGE.MAX_AUCTION_START);
+        const reservePrice = startPrice + startPrice / 2n; // 50% higher
+
+        logger.info('📦 CREATING AUCTION');
+        logger.info(`   Seller: ${seller.address}`);
+        logger.info(`   Token ID: ${tokenId}`);
+        logger.info(`   Start Price: ${formatSTX(startPrice)}`);
+        logger.info(`   Reserve: ${formatSTX(reservePrice)}`);
+        logger.info(`   Duration: ${AUCTION_CONFIG.DEFAULT_DURATION} blocks\n`);
+
+        try {
+            const { txId } = await createAuction(
+                seller.privateKey,
+                tokenId,
+                startPrice,
+                reservePrice,
+                AUCTION_CONFIG.DEFAULT_DURATION,
+                BigInt(0)
+            );
+
+            results.push({
+                action: 'create',
+                wallet: seller.address,
+                auctionId: null,
+                tokenId,
+                txId,
+                success: true,
+            });
+
+            successCount++;
+            logger.success(`  ✅ Auction created! TX: ${txId}\n`);
+
+        } catch (error: any) {
+            results.push({
+                action: 'create',
+                wallet: seller.address,
+                auctionId: null,
+                tokenId,
+                txId: null,
+                success: false,
+                error: error.message,
+            });
+
+            failCount++;
+            logger.error(`  ❌ Error: ${error.message}\n`);
+        }
+
+        await sleep(RATE_LIMIT.TX_DELAY_MS);
+    }
+
+    if (mode === 'bid' || mode === 'full') {
+        // Place bids from other wallets
+        logger.info('💰 PLACING BIDS');
+
+        let currentBid = randomBigInt(PRICE_RANGE.MIN_AUCTION_START, PRICE_RANGE.MAX_AUCTION_START);
+
+        for (let i = 1; i < Math.min(wallets.length, 4); i++) {
+            const bidder = wallets[i];
+            currentBid = currentBid + currentBid / 10n; // 10% increment
+
+            logger.info(`   Bidder ${i}: ${bidder.address}`);
+            logger.info(`   Bid Amount: ${formatSTX(currentBid)}`);
+
+            try {
+                const { txId } = await placeBid(
+                    bidder.privateKey,
+                    auctionId,
+                    currentBid,
+                    BigInt(0)
+                );
+
+                results.push({
+                    action: 'bid',
+                    wallet: bidder.address,
+                    auctionId,
+                    bidAmount: formatSTX(currentBid),
+                    txId,
+                    success: true,
+                });
+
+                successCount++;
+                logger.success(`  ✅ Bid placed! TX: ${txId}\n`);
+
+            } catch (error: any) {
+                results.push({
+                    action: 'bid',
+                    wallet: bidder.address,
+                    auctionId,
+                    bidAmount: formatSTX(currentBid),
+                    txId: null,
+                    success: false,
+                    error: error.message,
+                });
+
+                failCount++;
+                logger.error(`  ❌ Error: ${error.message}\n`);
+            }
+
+            await sleep(RATE_LIMIT.TX_DELAY_MS);
+        }
+    }
+
+    if (mode === 'settle') {
+        // Settle auction (anyone can call after end)
+        logger.info('🏁 SETTLING AUCTION');
+
+        const settler = wallets[0];
+
+        try {
+            const { txId } = await settleAuction(
+                settler.privateKey,
+                auctionId,
+                BigInt(0)
+            );
+
+            results.push({
+                action: 'settle',
+                wallet: settler.address,
+                auctionId,
+                txId,
+                success: true,
+            });
+
+            successCount++;
+            logger.success(`  ✅ Auction settled! TX: ${txId}\n`);
+
+        } catch (error: any) {
+            results.push({
+                action: 'settle',
+                wallet: settler.address,
+                auctionId,
+                txId: null,
+                success: false,
+                error: error.message,
+            });
+
+            failCount++;
+            logger.error(`  ❌ Error: ${error.message}\n`);
+        }
+    }
+
+    // Summary
+    logger.info('\n' + '═'.repeat(60));
+    logger.info('📊 AUCTION SUMMARY');
+    logger.info('═'.repeat(60));
+    logger.info(`  Total Attempts: ${results.length}`);
+    logger.success(`  ✅ Successful:  ${successCount}`);
+    logger.error(`  ❌ Failed:      ${failCount}`);
+    logger.info('═'.repeat(60));
+
+    // Save results
+    fs.writeFileSync(FILES.AUCTIONS, JSON.stringify(results, null, 2));
+    logger.info(`\n📁 Results saved to: ${FILES.AUCTIONS}\n`);
+}
+
+main().catch(logger.error);
