@@ -37,7 +37,12 @@ export const ListingModal: React.FC<ListingModalProps> = ({ isOpen, onClose, tok
             <FadeIn duration={0.2} className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={onClose} />
 
             <FadeIn direction="up" duration={0.3} className="relative z-10 w-full max-w-md">
-                <div className="bg-neutral-900 border border-neutral-700 rounded-xl p-6 relative shadow-2xl shadow-purple-500/10">
+                <div
+                    className="bg-neutral-900 border border-neutral-700 rounded-xl p-6 relative shadow-2xl shadow-purple-500/10"
+                    role="dialog"
+                    aria-modal="true"
+                    aria-labelledby="modal-title"
+                >
                     <button
                         onClick={onClose}
                         className="absolute top-4 right-4 text-neutral-400 hover:text-white transition-colors"
