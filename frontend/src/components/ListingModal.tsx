@@ -51,11 +51,12 @@ export const ListingModal: React.FC<ListingModalProps> = ({ isOpen, onClose, tok
 
                     <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                         <div>
-                            <label className="block text-sm font-medium text-neutral-400 mb-2">
+                            <label htmlFor="price-input" className="block text-sm font-medium text-neutral-400 mb-2">
                                 Price (STX)
                             </label>
                             <div className="relative">
                                 <input
+                                    id="price-input"
                                     type="number"
                                     value={price}
                                     onChange={(e) => setPrice(e.target.value)}
@@ -64,8 +65,9 @@ export const ListingModal: React.FC<ListingModalProps> = ({ isOpen, onClose, tok
                                     min="0"
                                     className="w-full bg-neutral-800 border border-neutral-700 rounded-lg pl-4 pr-12 py-3 text-white focus:outline-none focus:border-purple-500 transition-colors"
                                     required
+                                    aria-invalid={!price}
                                 />
-                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 font-bold">
+                                <div className="absolute right-4 top-1/2 -translate-y-1/2 text-neutral-500 font-bold" aria-hidden="true">
                                     STX
                                 </div>
                             </div>
