@@ -278,6 +278,15 @@ Gagafinance/
 4. **Anti-sniping**: Auctions extend by 1 hour if bid placed in final hour
 5. **Block-based Timing**: Uses block-height for auction timing (reliable, deterministic)
 
+
+## 🗺️ Roadmap
+
+- [x] Mainnet Deployment
+- [ ] SIP-010 Token Integration
+- [ ] Advanced Auction Types (Dutch Auction)
+- [ ] Analytics Dashboard
+
 ## 📄 License
+
 
 MIT
