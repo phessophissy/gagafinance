@@ -126,7 +126,9 @@
 ;; ============================================
 
 ;; Get the last minted token ID
+;; @desc Returns the ID of the last token minted
 (define-read-only (get-last-token-id)
+
   (ok (var-get last-token-id))
 )
 
