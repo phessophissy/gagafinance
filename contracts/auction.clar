@@ -8,21 +8,25 @@
 ;; ============================================
 ;; CONSTANTS - Error Codes
 ;; ============================================
-(define-constant ERR-NOT-AUTHORIZED (err u400))
-(define-constant ERR-NOT-FOUND (err u401))
-(define-constant ERR-AUCTION-EXISTS (err u402))
-(define-constant ERR-AUCTION-NOT-ACTIVE (err u403))
-(define-constant ERR-AUCTION-ENDED (err u404))
-(define-constant ERR-AUCTION-NOT-ENDED (err u405))
-(define-constant ERR-BID-TOO-LOW (err u406))
-(define-constant ERR-CANNOT-BID-OWN-AUCTION (err u407))
-(define-constant ERR-CONTRACT-PAUSED (err u408))
-(define-constant ERR-INVALID-DURATION (err u409))
-(define-constant ERR-INVALID-PRICE (err u410))
-(define-constant ERR-TRANSFER-FAILED (err u411))
-(define-constant ERR-NOT-SELLER (err u412))
-(define-constant ERR-HAS-BIDS (err u413))
-(define-constant ERR-ALREADY-HIGHEST-BIDDER (err u414))
+;; ============================================
+;; CONSTANTS - Error Codes
+;; ============================================
+(define-constant ERR-NOT-AUTHORIZED (err u400)) ;; Caller not authorized
+(define-constant ERR-NOT-FOUND (err u401)) ;; Resource not found
+(define-constant ERR-AUCTION-EXISTS (err u402)) ;; Auction already exists
+(define-constant ERR-AUCTION-NOT-ACTIVE (err u403)) ;; Auction is inactive
+(define-constant ERR-AUCTION-ENDED (err u404)) ;; Auction has ended
+(define-constant ERR-AUCTION-NOT-ENDED (err u405)) ;; Auction has not ended
+(define-constant ERR-BID-TOO-LOW (err u406)) ;; Bid is too low
+(define-constant ERR-CANNOT-BID-OWN-AUCTION (err u407)) ;; Seller cannot bid on own auction
+(define-constant ERR-CONTRACT-PAUSED (err u408)) ;; Contract is paused
+(define-constant ERR-INVALID-DURATION (err u409)) ;; Duration is invalid
+(define-constant ERR-INVALID-PRICE (err u410)) ;; Price is invalid
+(define-constant ERR-TRANSFER-FAILED (err u411)) ;; STX/NFT transfer failed
+(define-constant ERR-NOT-SELLER (err u412)) ;; Caller is not the seller
+(define-constant ERR-HAS-BIDS (err u413)) ;; Auction has bids (cannot cancel)
+(define-constant ERR-ALREADY-HIGHEST-BIDDER (err u414)) ;; Caller is already highest bidder
+
 
 ;; ============================================
 ;; CONFIGURATION
