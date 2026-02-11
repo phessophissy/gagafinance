@@ -245,7 +245,11 @@
 )
 
 ;; Update listing price
+;; @desc Updates the price of an active listing
+;; @param listing-id; The ID of the listing to update
+;; @param new-price; The new price in uSTX
 (define-public (update-listing-price (listing-id uint) (new-price uint))
+
   (let (
     (listing (unwrap! (map-get? listings listing-id) ERR-NOT-FOUND))
   )
