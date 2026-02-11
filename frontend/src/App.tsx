@@ -34,7 +34,7 @@ function App() {
     <Layout>
       <div className="flex flex-col items-center justify-center min-h-[40vh] text-center gap-6">
         <FadeIn delay={0.2} direction="down">
-          <h1 className="text-5xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600">
+          <h1 className="text-5xl font-extrabold text-gradient">
             Welcome to GagaFinance
           </h1>
         </FadeIn>
