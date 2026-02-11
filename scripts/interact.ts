@@ -50,7 +50,7 @@ function loadWallets(): Wallet[] {
 async function getNonce(address: string): Promise<bigint> {
     try {
         const response = await fetch(`https://api.mainnet.hiro.so/extended/v1/address/${address}/nonces`);
-        const data = await response.json();
+        const data: any = await response.json();
         return BigInt(data.possible_next_nonce || 0);
     } catch (error) {
         logger.warn(`   ⚠️ Could not fetch nonce, using 0`);

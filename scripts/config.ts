@@ -37,6 +37,8 @@ export const TX_CONFIG = {
     POST_CONDITION_MODE: 1, // allow
 };
 
+export const MAX_FEE = TX_CONFIG.MAX_FEE;
+
 // Rate limiting for mainnet safety
 export const RATE_LIMIT = {
     // Delay between transactions in ms
