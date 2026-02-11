@@ -26,8 +26,8 @@ export const Header: React.FC = () => {
 
                 {isConnected ? (
                     <div className="flex items-center gap-4">
-                        <div className="flex items-center gap-2 px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700">
-                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                        <div className="flex items-center gap-2 px-4 py-2 bg-neutral-800 rounded-lg border border-neutral-700" role="status" aria-label="Wallet Status">
+                            <span className="w-2 h-2 bg-green-500 rounded-full animate-pulse" aria-hidden="true"></span>
                             <span className="text-sm font-medium text-neutral-300">
                                 {userData?.profile?.stxAddress?.testnet ? truncateAddress(userData.profile.stxAddress.testnet) : 'Connected'}
                             </span>
@@ -37,8 +37,9 @@ export const Header: React.FC = () => {
                             variant="ghost"
                             size="sm"
                             title="Disconnect"
+                            aria-label="Disconnect Wallet"
                         >
-                            <LogOut size={20} />
+                            <LogOut size={20} aria-hidden="true" />
                         </Button>
                     </div>
                 ) : (
@@ -46,8 +47,9 @@ export const Header: React.FC = () => {
                         onClick={connectWallet}
                         variant="secondary"
                         className="flex items-center gap-2"
+                        aria-label="Connect Wallet"
                     >
-                        <Wallet size={18} className="text-purple-400" />
+                        <Wallet size={18} className="text-purple-400" aria-hidden="true" />
                         <span className="font-medium">Connect Wallet</span>
                     </Button>
                 )}
