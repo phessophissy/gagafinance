@@ -268,7 +268,11 @@
 )
 
 ;; Batch mint multiple NFTs to same recipient
+;; @desc Mints multiple tokens to the same recipient (for testing/airdrop)
+;; @param recipient; The address to receive the tokens
+;; @param count; The number of tokens to mint
 (define-public (mint-batch (recipient principal) (count uint))
+
   (let (
     (current-id (var-get last-token-id))
     (new-last-id (+ current-id count))
