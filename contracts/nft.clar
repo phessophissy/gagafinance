@@ -53,19 +53,25 @@
 ;; DATA MAPS
 ;; ============================================
 ;; Token ownership
+;; Maps token-id to owner principal
 (define-map token-owners uint principal)
 
 ;; Token URIs (optional per-token override)
+;; Maps token-id to specific metadata URI
 (define-map token-uris uint (string-ascii 256))
 
 ;; Approvals - who can transfer on behalf of owner
+;; Maps token-id to approved spender
 (define-map token-approvals uint principal)
 
 ;; Operator approvals - approve all tokens for an operator
+;; Maps {owner, operator} tuple to boolean status
 (define-map operator-approvals { owner: principal, operator: principal } bool)
 
 ;; Minting allowlist (optional)
+;; Maps principal to allowlisted status
 (define-map mint-allowlist principal bool)
+
 
 ;; ============================================
 ;; PRIVATE FUNCTIONS
