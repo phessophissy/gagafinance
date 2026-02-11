@@ -291,7 +291,11 @@
 ;; ============================================
 
 ;; Place a bid on an auction
+;; @desc Places a new bid, refunding the previous bidder
+;; @param auction-id; The ID of the auction to bid on
+;; @param bid-amount; The bid amount in uSTX
 (define-public (place-bid (auction-id uint) (bid-amount uint))
+
   (let (
     (auction (unwrap! (map-get? auctions auction-id) ERR-NOT-FOUND))
   )
