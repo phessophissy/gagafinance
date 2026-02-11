@@ -4,7 +4,7 @@ import { Button } from './ui/Button';
 
 export const Footer: React.FC = () => {
     return (
-        <footer className="bg-neutral-900 border-t border-neutral-800 pt-12 pb-8 mt-16">
+        <footer className="bg-neutral-900 border-t border-neutral-800 pt-16 pb-8 mt-20">
             <div className="container mx-auto px-4">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
                     <div className="col-span-1 md:col-span-2">
