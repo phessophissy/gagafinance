@@ -10,3 +10,5 @@
 
 ;; Test contract line  6
 
+;; Test contract line  7
+
