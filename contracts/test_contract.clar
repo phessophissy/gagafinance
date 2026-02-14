@@ -4,3 +4,5 @@
 
 ;; Test contract line  3
 
+;; Test contract line  4
+
