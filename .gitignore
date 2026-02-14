@@ -66,3 +66,5 @@ build/
 *.temp
 # Ignore pattern  1
 
+# Ignore pattern  2
+
