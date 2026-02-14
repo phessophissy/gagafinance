@@ -6,3 +6,5 @@
 
 ;; Test contract line  4
 
+;; Test contract line  5
+
