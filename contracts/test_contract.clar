@@ -2,3 +2,5 @@
 
 ;; Test contract line  2
 
+;; Test contract line  3
+
